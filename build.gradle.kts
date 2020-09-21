@@ -7,7 +7,7 @@ plugins {
     kotlin("plugin.spring") version "1.4.10"
 }
 
-group = "com.recipyApp"
+group = "com.recipeApp"
 version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_13
 

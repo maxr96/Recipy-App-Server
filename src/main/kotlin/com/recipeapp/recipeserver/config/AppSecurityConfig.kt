@@ -1,4 +1,4 @@
-package com.recipyapp.recipyserver.config
+package com.recipeapp.recipeserver.config
 
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -13,7 +13,7 @@ class SecSecurityConfig : WebSecurityConfigurerAdapter() {
     override fun configure(http: HttpSecurity) {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/home", "/recipy").permitAll()
+                .antMatchers("/", "/recipes", "/recipes/{^[\\\\d]\$}").permitAll()
                 .anyRequest().authenticated()
                 .and().formLogin()
                 .permitAll().and().logout().permitAll();

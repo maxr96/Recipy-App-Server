@@ -1,1 +1,1 @@
-rootProject.name = "recipyserver"
+rootProject.name = "recipeserver"

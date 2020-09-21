@@ -1,10 +1,10 @@
-package com.recipyapp.recipyserver
+package com.recipeapp.recipeserver
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
-class RecipyServerApplicationTests {
+class RecipeServerApplicationTests {
 
     @Test
     fun contextLoads() {

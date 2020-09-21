@@ -1,11 +1,11 @@
-package com.recipyapp.recipyserver
+package com.recipeapp.recipeserver
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class RecipyserverApplication
+class RecipeServerApplication
 
 fun main(args: Array<String>) {
-    runApplication<RecipyserverApplication>(*args)
+    runApplication<RecipeServerApplication>(*args)
 }
