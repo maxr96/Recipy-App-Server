@@ -34,7 +34,6 @@ dependencies {
     implementation("com.microsoft.azure:azure-spring-boot-starter")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation("org.liquibase:liquibase-core")
     implementation("org.hibernate:hibernate-core:5.4.21.Final")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
