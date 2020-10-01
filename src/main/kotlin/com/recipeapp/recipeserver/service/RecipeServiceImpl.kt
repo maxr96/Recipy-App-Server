@@ -26,5 +26,4 @@ class RecipeServiceImpl : RecipeService {
     override fun changeRecipe(recipe: Recipe): Recipe {
         TODO("Not yet implemented")
     }
-
 }

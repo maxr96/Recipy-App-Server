@@ -13,9 +13,9 @@ class SecSecurityConfig : WebSecurityConfigurerAdapter() {
     override fun configure(http: HttpSecurity) {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/recipes", "/recipes/{^[\\\\d]\$}").permitAll()
+                .antMatchers("/", "/recipes", "/recipes/{^[\\\\d]\$}", "/recipes/unit", "/unit").permitAll()
                 .anyRequest().authenticated()
                 .and().formLogin()
-                .permitAll().and().logout().permitAll();
+                .permitAll().and().logout().permitAll()
     }
 }
