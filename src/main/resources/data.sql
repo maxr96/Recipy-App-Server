@@ -11,43 +11,40 @@ CREATE TABLE recipe (
 INSERT INTO recipe (description, title, time, author) VALUES
     ('Desc', 'Title', 1234, 'Me'),
     ('Desc2', 'Awesome Title', 2347, 'You');
+
+-- create table Recipe (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, name VARCHAR(25), description VARCHAR(50), instructions VARCHAR(500)) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 --
---     CREATE OR REPLACE TABLE recipe (
---     id INT AUTO_INCREMENT PRIMARY KEY,
---     description VARCHAR(250) NOT NULL,
---     title VARCHAR(250) NOT NULL,
---     time INT NOT NULL,
---     author VARCHAR(50) NOT NULL,
---     ingredient_amount_id INT NOT NULL,
---     foreign key (ingredient_amount_id) references ingredient_amount
--- ) ENGINE=MyISAM;
+-- create table Ingredient (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, name VARCHAR(50)) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 --
---  CREATE OR REPLACE TABLE ingredient_amount (
---         id INT AUTO_INCREMENT PRIMARY KEY,
---         unit_id INT NOT NULL,
---         ingredient_id INT NOT NULL,
---         foreign key (unit_id) references unit.id,
---         foreign key (ingredient_id) references ingredient.id,
---         UNIQUE(unit_id),
---         UNIQUE(ingredient_id)
---    ) ENGINE=MyISAM;
+-- create table Measure (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, name VARCHAR(30)) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 --
---    CREATE OR REPLACE TABLE ingredient (
---        id INT AUTO_INCREMENT PRIMARY KEY,
---        name VARCHAR(50) NOT NULL
---    ) ENGINE=MyISAM;
+-- create table RecipeIngredient (recipe_id INT NOT NULL, ingredient_id INT NOT NULL, measure_id INT, amount INT,
+-- 	CONSTRAINT fk_recipe FOREIGN KEY(recipe_id) REFERENCES Recipe(id),
+-- 	CONSTRAINT fk_ingredient FOREIGN KEY(ingredient_id) REFERENCES Ingredient(id),
+-- 	CONSTRAINT fk_measure FOREIGN KEY(measure_id) REFERENCES Measure(id))
+-- 	ENGINE=InnoDB DEFAULT CHARSET=utf8;
 --
---      CREATE OR REPLACE TABLE unit (
---    		id INT AUTO_INCREMENT PRIMARY KEY,
---        name VARCHAR(50) NOT NULL
---    ) ENGINE=MyISAM;
+-- INSERT INTO Measure (name) VALUES('CUP'), ('TEASPOON'), ('TABLESPOON');
 --
--- INSERT INTO recipe (description, title, time, author, ingredient_amount_id) VALUES
---     ('Desc3', 'Awesome Title2', 23475, 'You', 1);
+-- INSERT INTO Ingredient (name) VALUES('egg'), ('salt'), ('sugar'), ('chocolate'), ('vanilla extract'), ('flour');
 --
+-- INSERT INTO Recipe (name, description, instructions) VALUES('Boiled Egg', 'A single boiled egg', 'Add egg to cold water. Bring water to boil. Cook.');
 --
---   INSERT INTO ingredient_amount (unit_id, ingredient_id) VALUES (1, 1)
+-- INSERT INTO Recipe (name, description, instructions) VALUES('Chocolate Cake', 'Yummy cake', 'Add eggs, flour, chocolate to pan. Bake at 350 for 1 hour');
 --
---   INSERT INTO ingredient (name) VALUES ('buckwheat')
+-- INSERT INTO RecipeIngredient (recipe_id, ingredient_id, measure_id, amount) VALUES (1, 1, NULL, 1);
 --
---   INSERT INTO unit (name) VALUES ('gram')
+-- INSERT INTO RecipeIngredient (recipe_id, ingredient_id, measure_id, amount)  VALUES (2, 1, NULL, 3);
+--
+-- INSERT INTO RecipeIngredient (recipe_id, ingredient_id, measure_id, amount)  VALUES (2, 2, 2, 1);
+--
+-- INSERT INTO RecipeIngredient (recipe_id, ingredient_id, measure_id, amount)  VALUES (2, 3, 1, 2);
+--
+-- INSERT INTO RecipeIngredient (recipe_id, ingredient_id, measure_id, amount)  VALUES (2, 4, 1, 1);
+--
+-- SELECT r.name AS 'Recipe', r.instructions, ri.amount AS 'Amount', mu.name AS 'Unit of Measure', i.name AS 'Ingredient'
+-- FROM Recipe r
+-- JOIN RecipeIngredient ri on r.id = ri.recipe_id
+-- JOIN Ingredient i on i.id = ri.ingredient_id
+-- LEFT OUTER JOIN Measure mu on mu.id = measure_id;
+

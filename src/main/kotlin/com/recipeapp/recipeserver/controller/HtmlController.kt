@@ -1,10 +1,9 @@
 package com.recipeapp.recipeserver.controller
 
-import com.recipeapp.recipeserver.model.MeasurmentUnit
+import com.recipeapp.recipeserver.model.MeasurementUnit
 import com.recipeapp.recipeserver.model.Recipe
 import com.recipeapp.recipeserver.service.RecipeService
 import com.recipeapp.recipeserver.service.UnitService
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
@@ -37,7 +36,7 @@ class RecipeController(
     }
 
     @PostMapping("/unit")
-    fun postUnit(@RequestBody unit: MeasurmentUnit): ResponseEntity<MeasurmentUnit> {
+    fun postUnit(@RequestBody unit: MeasurementUnit): ResponseEntity<MeasurementUnit> {
         val unit = unitService.addUnit(unit);
         return if(unit != null) {
             ResponseEntity.ok().body(unit)
