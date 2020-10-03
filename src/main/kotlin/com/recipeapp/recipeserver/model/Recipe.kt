@@ -19,7 +19,7 @@ class Recipe (
         var instructions: String,
 
        @get:OneToMany
-        var ingredientAmounts: Set<RecipeIngredient>,
+        var recipeIngredients: Set<RecipeIngredient>,
         var time: Int,
         var author: String)
 
@@ -35,11 +35,11 @@ class RecipeIngredient (
         var recipe: Recipe,
 
         @get:OneToOne(cascade = [CascadeType.ALL])
-        @get:JoinColumn(name = "ingredient_id")
+        @get:JoinColumn(name = "ingredient_id", nullable = false)
         var ingredient: Ingredient,
 
         @get:OneToOne(cascade = [CascadeType.ALL])
-        @get:JoinColumn(name = "measure_id")
+        @get:JoinColumn(name = "measure_id", nullable = false)
         var unit: MeasurementUnit,
 
         @get:Column
