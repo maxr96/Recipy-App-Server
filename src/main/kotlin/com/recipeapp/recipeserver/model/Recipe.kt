@@ -5,65 +5,61 @@ import javax.persistence.*
 @Table
 @Entity
 class Recipe (
-        @get:Id
-        @get:GeneratedValue
-        @get:Column
+        @Id
+        @GeneratedValue
+        @Column
         var id: Long,
 
-        @get:Column
+        @Column
         var title: String,
 
-        @get:Column
+        @Column
         var description: String,
 
-        @get:Column
+        @Column
         var instructions: String,
 
-       @get:OneToMany
-        var recipeIngredients: Set<RecipeIngredient>,
+       @OneToMany
+        var recipeIngredients: MutableCollection<RecipeIngredient>,
         var time: Int,
         var author: String)
 
 @Entity
 class RecipeIngredient (
-        @get:Id
-        @get:GeneratedValue
-        @get:Column
+        @Id
+        @GeneratedValue
+        @Column
         var id: Long,
 
-//        @get:ManyToOne
-//        @get:JoinColumn
-//        var recipe: Recipe,
-
-        @get:OneToOne(cascade = [CascadeType.ALL])
-        @get:JoinColumn(nullable = false)
+        @OneToOne(cascade = [CascadeType.ALL])
+        @JoinColumn(nullable = false)
         var ingredient: Ingredient,
 
-        @get:OneToOne(cascade = [CascadeType.ALL])
-        @get:JoinColumn(nullable = false)
+        @OneToOne(cascade = [CascadeType.ALL])
+        @JoinColumn(nullable = false)
         var unit: MeasurementUnit,
 
-        @get:Column
+        @Column
         var amount: Int
         )
 @Entity
 class Ingredient(
-        @get:Id
-        @get:GeneratedValue
-        @get:Column
+        @Id
+        @GeneratedValue
+        @Column
         var id: Long,
 
-        @get:Column
+        @Column
         var name: String
 )
 
 @Entity
 class MeasurementUnit(
-        @get:Id
-        @get:GeneratedValue
-        @get:Column
+        @Id
+        @GeneratedValue
+        @Column
         var id: Long,
 
-        @get:Column
+        @Column
         var name: String
 )
