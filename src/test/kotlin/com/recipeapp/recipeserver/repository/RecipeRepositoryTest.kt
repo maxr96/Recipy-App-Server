@@ -11,7 +11,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 
 @ExtendWith(SpringExtension::class)
 @SpringBootTest
-@ActiveProfiles("dev")
+@ActiveProfiles("test")
 class HibernateDemoApplicationTests(@Autowired val repo: RecipeRepository) {
 
     @Test

@@ -2,6 +2,7 @@ package com.recipeapp.recipeserver.model
 
 import javax.persistence.*
 
+@Table
 @Entity
 class Recipe (
         @get:Id
@@ -31,15 +32,15 @@ class RecipeIngredient (
         var id: Long,
 
         @get:ManyToOne
-        @get:JoinColumn(name = "recipe_id", nullable = false)
+        @get:JoinColumn(nullable = false)
         var recipe: Recipe,
 
         @get:OneToOne(cascade = [CascadeType.ALL])
-        @get:JoinColumn(name = "ingredient_id", nullable = false)
+        @get:JoinColumn(nullable = false)
         var ingredient: Ingredient,
 
         @get:OneToOne(cascade = [CascadeType.ALL])
-        @get:JoinColumn(name = "measure_id", nullable = false)
+        @get:JoinColumn(nullable = false)
         var unit: MeasurementUnit,
 
         @get:Column

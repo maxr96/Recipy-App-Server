@@ -13,4 +13,8 @@ class UnitServiceImpl : UnitService {
     override fun addUnit(unit: MeasurementUnit): MeasurementUnit {
         return unitRepository.save(unit);
     }
+
+    override fun getAllUnits(): List<MeasurementUnit> {
+        return unitRepository.findAll();
+    }
 }

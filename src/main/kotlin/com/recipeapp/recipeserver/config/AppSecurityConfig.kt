@@ -1,6 +1,7 @@
 package com.recipeapp.recipeserver.config
 
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.HttpMethod
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
@@ -13,9 +14,12 @@ class SecSecurityConfig : WebSecurityConfigurerAdapter() {
     override fun configure(http: HttpSecurity) {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/recipes", "/recipes/{^[\\\\d]\$}", "/recipes/unit", "/unit").permitAll()
+                .antMatchers("/", "/recipes", "/recipes/{^[\\\\d]\$}", "/units").permitAll()
+        .antMatchers(HttpMethod.POST, "/units").permitAll()
                 .anyRequest().authenticated()
-                .and().formLogin()
-                .permitAll().and().logout().permitAll()
+                .and().csrf().disable()
+
+                ///.formLogin()
+                //.permitAll().and().logout().permitAll()
     }
 }
