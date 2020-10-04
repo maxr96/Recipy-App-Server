@@ -4,6 +4,8 @@ import com.recipeapp.recipeserver.model.MeasurementUnit
 import com.recipeapp.recipeserver.service.UnitService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder
+import java.net.URI
 
 @RestController
 @RequestMapping("/units")
@@ -12,7 +14,10 @@ class UnitController (
 ) {
     @PostMapping
     fun postUnit(@RequestBody unit: MeasurementUnit): ResponseEntity<MeasurementUnit> {
-        return ResponseEntity.ok().body(unitService.addUnit(unit))
+        val addedUnit = unitService.addUnit(unit)
+        val location: URI = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(addedUnit.id).toUri()
+        return ResponseEntity.created(location).build()
     }
 
     @GetMapping

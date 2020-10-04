@@ -31,9 +31,9 @@ class RecipeIngredient (
         @get:Column
         var id: Long,
 
-        @get:ManyToOne
-        @get:JoinColumn(nullable = false)
-        var recipe: Recipe,
+//        @get:ManyToOne
+//        @get:JoinColumn
+//        var recipe: Recipe,
 
         @get:OneToOne(cascade = [CascadeType.ALL])
         @get:JoinColumn(nullable = false)

@@ -16,7 +16,7 @@ class RecipeServiceImpl : RecipeService {
     }
 
     override fun getRecipeById(id: Long): Recipe? {
-        return recipeRepository.getById(id);
+        return recipeRepository.getById(id)
     }
 
     override fun addRecipe(recipe: Recipe): Recipe {

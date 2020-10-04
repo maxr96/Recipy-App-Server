@@ -15,7 +15,7 @@ class SecSecurityConfig : WebSecurityConfigurerAdapter() {
         http
                 .authorizeRequests()
                 .antMatchers("/", "/recipes", "/recipes/{^[\\\\d]\$}", "/units").permitAll()
-        .antMatchers(HttpMethod.POST, "/units").permitAll()
+        .antMatchers(HttpMethod.POST, "/units", "/recipes").permitAll()
                 .anyRequest().authenticated()
                 .and().csrf().disable()
 

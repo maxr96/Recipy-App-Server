@@ -4,6 +4,9 @@ import com.recipeapp.recipeserver.model.Recipe
 import com.recipeapp.recipeserver.service.RecipeService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder
+import java.net.URI
+
 
 @RestController
 @RequestMapping("/recipes")
@@ -30,5 +33,13 @@ class RecipeController(
         } else {
             ResponseEntity.notFound().build()
         }
+    }
+
+    @PostMapping
+    fun postRecipe(@RequestBody recipe: Recipe): ResponseEntity<Recipe> {
+        val recipe = recipeService.addRecipe(recipe)
+        val location: URI = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(recipe.id).toUri()
+        return ResponseEntity.created(location).build()
     }
 }
