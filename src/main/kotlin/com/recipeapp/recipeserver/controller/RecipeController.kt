@@ -26,7 +26,7 @@ class RecipeController(
     }
 
     @GetMapping("/{recipeId}")
-    fun getRecipe(@PathVariable recipeId: Long): ResponseEntity<Recipe> {
+    fun getRecipe(@PathVariable recipeId: Int): ResponseEntity<Recipe> {
         val recipe = recipeService.getRecipeById(recipeId)
         return if(recipe != null) {
             ResponseEntity.ok().body(recipe)

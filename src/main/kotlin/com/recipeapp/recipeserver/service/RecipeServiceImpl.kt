@@ -1,6 +1,5 @@
 package com.recipeapp.recipeserver.service
 
-import com.recipeapp.recipeserver.model.MeasurementUnit
 import com.recipeapp.recipeserver.model.Recipe
 import com.recipeapp.recipeserver.repository.*
 import com.recipeapp.recipeserver.repository.UnitRepository
@@ -29,7 +28,7 @@ class RecipeServiceImpl : RecipeService {
         return recipeRepository.findAll().toSet()
     }
 
-    override fun getRecipeById(id: Long): Recipe? {
+    override fun getRecipeById(id: Int): Recipe? {
         return recipeRepository.getById(id)
     }
 
