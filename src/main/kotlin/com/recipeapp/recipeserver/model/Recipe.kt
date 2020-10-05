@@ -1,5 +1,6 @@
 package com.recipeapp.recipeserver.model
 
+import java.util.*
 import javax.persistence.*
 
 @Entity
@@ -23,48 +24,11 @@ class Recipe (
         @JoinColumn(name = "recipeId", referencedColumnName = "id",
                 foreignKey = ForeignKey(name = "FK_recipe_recipeingredients"))
         var recipeIngredients: Set<RecipeIngredient>,
-        var time: Int,
+
+        @Column
+        @Temporal(TemporalType.TIMESTAMP)
+        var time: Date,
 
         @ManyToOne(cascade = [CascadeType.ALL])
         @JoinColumn(nullable = false, foreignKey = ForeignKey(name = "FK_recipes_author"))
         var author: Author)
-
-@Entity
-class RecipeIngredient (
-        @Id
-        @GeneratedValue
-        @Column
-        var id: Int,
-
-        @ManyToOne(cascade = [CascadeType.ALL])
-        @JoinColumn(nullable = false, foreignKey = ForeignKey(name = "FK_ingredients_recipeingredient"))
-        var ingredient: Ingredient,
-
-        @ManyToOne(cascade = [CascadeType.ALL])
-        @JoinColumn(nullable = false, foreignKey = ForeignKey(name = "FK_units_recipeingredient"))
-        var unit: MeasurementUnit,
-
-        @Column
-        var amount: Short
-        )
-@Entity
-class Ingredient(
-        @Id
-        @GeneratedValue
-        @Column
-        var id: Int,
-
-        @Column(length = 50)
-        var name: String
-)
-
-@Entity
-class MeasurementUnit(
-        @Id
-        @GeneratedValue
-        @Column
-        var id: Int,
-
-        @Column(length = 50)
-        var name: String
-)
