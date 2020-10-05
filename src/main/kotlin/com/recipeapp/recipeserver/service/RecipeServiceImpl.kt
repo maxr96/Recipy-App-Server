@@ -2,9 +2,7 @@ package com.recipeapp.recipeserver.service
 
 import com.recipeapp.recipeserver.model.MeasurementUnit
 import com.recipeapp.recipeserver.model.Recipe
-import com.recipeapp.recipeserver.repository.IngredientRepository
-import com.recipeapp.recipeserver.repository.RecipeIngredientRepository
-import com.recipeapp.recipeserver.repository.RecipeRepository
+import com.recipeapp.recipeserver.repository.*
 import com.recipeapp.recipeserver.repository.UnitRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
@@ -23,6 +21,9 @@ class RecipeServiceImpl : RecipeService {
     @Autowired
     private lateinit var unitRepository: UnitRepository
 
+    @Autowired
+    private lateinit var authorRepository: AuthorRepository
+
 
     override fun getAllRecipes(): Set<Recipe> {
         return recipeRepository.findAll().toSet()
@@ -33,6 +34,7 @@ class RecipeServiceImpl : RecipeService {
     }
 
     override fun addRecipe(recipe: Recipe): Recipe {
+        authorRepository.save(recipe.author);
         for(recipeIngredient in recipe.recipeIngredients){
             ingredientRepository.save(recipeIngredient.ingredient)
             unitRepository.save(recipeIngredient.unit)
