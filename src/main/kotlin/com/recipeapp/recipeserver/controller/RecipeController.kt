@@ -28,8 +28,8 @@ class RecipeController(
     @GetMapping("/{recipeId}")
     fun getRecipe(@PathVariable recipeId: Int): ResponseEntity<Recipe> {
         val recipe = recipeService.getRecipeById(recipeId)
-        return if(recipe != null) {
-            ResponseEntity.ok().body(recipe)
+        return if(recipe.isPresent) {
+            ResponseEntity.ok().body(recipe.get())
         } else {
             ResponseEntity.notFound().build()
         }

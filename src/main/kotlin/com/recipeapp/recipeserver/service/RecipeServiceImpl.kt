@@ -5,6 +5,7 @@ import com.recipeapp.recipeserver.repository.*
 import com.recipeapp.recipeserver.repository.UnitRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
+import java.util.*
 
 @Component
 class RecipeServiceImpl : RecipeService {
@@ -28,8 +29,8 @@ class RecipeServiceImpl : RecipeService {
         return recipeRepository.findAll().toSet()
     }
 
-    override fun getRecipeById(id: Int): Recipe? {
-        return recipeRepository.getById(id)
+    override fun getRecipeById(id: Int): Optional<Recipe> {
+        return recipeRepository.findById(id)
     }
 
     override fun addRecipe(recipe: Recipe): Recipe {
