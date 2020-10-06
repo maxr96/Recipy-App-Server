@@ -1,4 +1,4 @@
-package com.recipeapp.recipeserver.repository
+package com.recipeapp.recipeserver.service
 
 import com.recipeapp.recipeserver.model.*
 import com.recipeapp.recipeserver.service.RecipeService
@@ -15,17 +15,18 @@ import java.util.*
 @ExtendWith(SpringExtension::class)
 @SpringBootTest
 @ActiveProfiles("test")
-class HibernateDemoApplicationTests(@Autowired val recipeService: RecipeService) {
+class RecipeServiceTests(@Autowired val recipeService: RecipeService) {
 
     @Test
-    fun `basic entity checks`() {
+    fun `add and retrieve recipes`() {
         val p = Recipe(1, "desc", "title", "wesd", setOf(
                 RecipeIngredient(1, Ingredient(1, "meat"), MeasurementUnit(1, "pieces"), 20)),
         Date.from(now()), Author(1, "me", "me@email.com"))
         assertThat(recipeService.getAllRecipes()).hasSize(0)
         recipeService.addRecipe(p)
         assertThat(recipeService.getAllRecipes()).hasSize(1)
-        val result = recipeService.getRecipeById(1).get()
+        var recipe = recipeService.getAllRecipes();
+        val result = recipeService.getRecipeById(p.id).get()
         assertThat(p).isEqualTo(result)
     }
 }

@@ -11,10 +11,10 @@ class UnitServiceImpl : UnitService {
     private lateinit var unitRepository: UnitRepository
 
     override fun addUnit(unit: MeasurementUnit): MeasurementUnit {
-        return unitRepository.save(unit);
+        return unitRepository.save(unit)
     }
 
     override fun getAllUnits(): List<MeasurementUnit> {
-        return unitRepository.findAll();
+        return unitRepository.findDistinctByNameIsNotIn(emptyList())
     }
 }
