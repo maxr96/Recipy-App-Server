@@ -31,4 +31,4 @@ class Recipe (
 
         @ManyToOne(cascade = [CascadeType.ALL])
         @JoinColumn(nullable = false, foreignKey = ForeignKey(name = "FK_recipes_author"))
-        var author: Author)
+        var author: User)

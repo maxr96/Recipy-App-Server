@@ -37,9 +37,17 @@ class RecipeController(
 
     @PostMapping
     fun postRecipe(@RequestBody recipe: Recipe): ResponseEntity<Recipe> {
-        val recipe = recipeService.addRecipe(recipe)
+        val addedRecipe = recipeService.addRecipe(recipe)
         val location: URI = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(recipe.id).toUri()
+                .buildAndExpand(addedRecipe.id).toUri()
+        return ResponseEntity.created(location).build()
+    }
+
+    @PutMapping
+    fun updateRecipe(@RequestBody recipe: Recipe): ResponseEntity<Recipe> {
+        val changedRecipe = recipeService.changeRecipe(recipe) ?: return ResponseEntity.notFound().build()
+        val location: URI = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(changedRecipe.id).toUri()
         return ResponseEntity.created(location).build()
     }
 }

@@ -7,5 +7,5 @@ interface RecipeService {
     fun getAllRecipes(): Set<Recipe>
     fun getRecipeById(id: Int): Optional<Recipe>
     fun addRecipe(recipe: Recipe): Recipe
-    fun changeRecipe(recipe: Recipe): Recipe
+    fun changeRecipe(recipe: Recipe): Recipe?
 }

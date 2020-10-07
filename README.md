@@ -2,21 +2,21 @@
 This is a personal project created for learning purposes. Here I 
 build a Spring Boot Recipe application using Kotlin and Gradle. The 
 database used is MariaDB. Other notable technologies: 
-- Hibernate
-- MS Azure deployment (not yet done)
-- Liquibase (not yet done) 
-- Trello Board for tracking progress (https://trello.com/b/z2fm1Jey/recip3-app)
-- TravisCI (not yet done)
-- SonarCloud (https://sonarcloud.io/dashboard?id=maxr96_Recipy-App-Server)
-- and more soon...
+- [x] Hibernate
+- [ ] MS Azure deployment (not yet done)
+- [ ] Liquibase (not yet done) 
+- [x] Trello Board for tracking progress (https://trello.com/b/z2fm1Jey/recip3-app)
+- [ ] TravisCI (not yet done)
+- [x] SonarCloud (https://sonarcloud.io/dashboard?id=maxr96_Recipy-App-Server)
+- [ ] and more soon...
 
 #Main features of the API
-   - Upload and store recipes
-   - Get and extend possible measurement units
-   - Retrieve list of available ingredients
-   - Search for recipes by ingredients (not yet done)
-   - Login the user (not yet done)
-   - and more...
+   - [x] Upload and store recipes
+   - [x] Get and extend possible measurement units
+   - [x] Retrieve list of available ingredients
+   - [ ] Search for recipes by ingredients (not yet done)
+   - [ ] Login the user (not yet done)
+   - [ ] and more...
 ## Database Model
 The main entities used for the database model:
 - MeasurementUnit - stores the name of different units, e.g. gram, spoon.

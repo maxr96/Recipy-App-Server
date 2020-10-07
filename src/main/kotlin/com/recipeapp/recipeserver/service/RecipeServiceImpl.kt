@@ -22,7 +22,7 @@ class RecipeServiceImpl : RecipeService {
     private lateinit var unitRepository: UnitRepository
 
     @Autowired
-    private lateinit var authorRepository: AuthorRepository
+    private lateinit var userRepository: UserRepository
 
 
     override fun getAllRecipes(): Set<Recipe> {
@@ -34,7 +34,7 @@ class RecipeServiceImpl : RecipeService {
     }
 
     override fun addRecipe(recipe: Recipe): Recipe {
-        authorRepository.save(recipe.author);
+        userRepository.save(recipe.author)
         for(recipeIngredient in recipe.recipeIngredients){
             ingredientRepository.save(recipeIngredient.ingredient)
             unitRepository.save(recipeIngredient.unit)
@@ -44,7 +44,12 @@ class RecipeServiceImpl : RecipeService {
         return recipeRepository.save(recipe)
     }
 
-    override fun changeRecipe(recipe: Recipe): Recipe {
-        TODO("Not yet implemented")
+    override fun changeRecipe(recipe: Recipe): Recipe? {
+        val storedRecipe = recipeRepository.findById(recipe.id)
+        return if (storedRecipe.isPresent) {
+            recipeRepository.save(storedRecipe.get())
+        } else {
+            null
+        }
     }
 }
