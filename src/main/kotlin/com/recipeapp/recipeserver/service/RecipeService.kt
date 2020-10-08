@@ -8,4 +8,5 @@ interface RecipeService {
     fun getRecipeById(id: Int): Optional<Recipe>
     fun addRecipe(recipe: Recipe): Recipe
     fun changeRecipe(recipe: Recipe): Recipe?
+    fun deleteRecipe(id: Int)
 }

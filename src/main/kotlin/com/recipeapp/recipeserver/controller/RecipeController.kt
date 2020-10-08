@@ -50,4 +50,10 @@ class RecipeController(
                 .buildAndExpand(changedRecipe.id).toUri()
         return ResponseEntity.created(location).build()
     }
+
+    @DeleteMapping
+    fun deleteRecipe(@PathVariable id: Int): ResponseEntity<Recipe> {
+        recipeService.deleteRecipe(id)
+        return ResponseEntity.noContent().build()
+    }
 }
