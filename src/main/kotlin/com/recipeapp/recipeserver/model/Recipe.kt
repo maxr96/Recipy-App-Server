@@ -10,13 +10,14 @@ class Recipe (
         @Column
         var id: Int,
 
-        @Column(length = 50)
+        @Column(length = 50, nullable = false)
         var title: String,
 
         @Column(length = 200)
         var description: String,
 
         @Column
+        @Lob
         var instructions: String,
 
         @OneToMany(targetEntity = RecipeIngredient::class, cascade = [CascadeType.ALL],
@@ -25,7 +26,7 @@ class Recipe (
                 foreignKey = ForeignKey(name = "FK_recipe_recipeingredients"))
         var recipeIngredients: Set<RecipeIngredient>,
 
-        @Column
+        @Column(nullable = false)
         @Temporal(TemporalType.TIMESTAMP)
         var time: Date,
 

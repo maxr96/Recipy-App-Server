@@ -1,9 +1,6 @@
 package com.recipeapp.recipeserver.model
 
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.Id
+import javax.persistence.*
 
 @Entity
 class MeasurementUnit(
@@ -12,6 +9,6 @@ class MeasurementUnit(
         @Column
         var id: Int,
 
-        @Column(length = 50)
+        @Column(length = 50, unique = true, nullable = false)
         var name: String
 )

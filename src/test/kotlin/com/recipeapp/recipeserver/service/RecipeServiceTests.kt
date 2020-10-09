@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit.jupiter.SpringExtension
+import org.springframework.transaction.annotation.Transactional
 import java.time.Instant.now
 import java.util.*
 
@@ -17,6 +18,7 @@ import java.util.*
 class RecipeServiceTests(@Autowired val recipeService: RecipeService) {
 
     @Test
+    @Transactional
     fun `add, retrieve and delete recipes`() {
         val p = Recipe(1, "desc", "title", "wesd", setOf(
                 RecipeIngredient(1, Ingredient(1, "meat"), MeasurementUnit(1, "pieces"), 20)),
@@ -28,8 +30,9 @@ class RecipeServiceTests(@Autowired val recipeService: RecipeService) {
         var storedRecipe = recipes.first()
         assertThat(p.title).isEqualTo(storedRecipe.title)
         assertThat(p.description).isEqualTo(storedRecipe.description)
-        // TODO: avoid Lazy initialization here
-        // assertThat(p.recipeIngredients.first().amount).isEqualTo(storedRecipe.recipeIngredients.first().amount)
+        var storedRecipeOne = recipeService.getRecipeById(storedRecipe.id);
+        assertThat(storedRecipe).isEqualToComparingFieldByField(storedRecipeOne.get())
+         assertThat(p.recipeIngredients.first().amount).isEqualTo(storedRecipe.recipeIngredients.first().amount)
         recipeService.deleteRecipe(storedRecipe.id)
         assertThat(recipeService.getAllRecipes().isEmpty())
     }

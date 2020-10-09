@@ -17,4 +17,8 @@ class UnitServiceImpl : UnitService {
     override fun getAllUnits(): List<MeasurementUnit> {
         return unitRepository.findDistinctByNameIsNotIn(emptyList())
     }
+
+    override fun getOneByName(name: String): MeasurementUnit? {
+        return unitRepository.findFirstByName(name)
+    }
 }
