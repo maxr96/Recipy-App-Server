@@ -2,13 +2,10 @@ package com.recipeapp.recipeserver.service
 
 import com.recipeapp.recipeserver.model.MeasurementUnit
 import com.recipeapp.recipeserver.repository.UnitRepository
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
 @Component
-class UnitServiceImpl : UnitService {
-    @Autowired
-    private lateinit var unitRepository: UnitRepository
+class UnitServiceImpl(val unitRepository: UnitRepository) : UnitService {
 
     override fun addUnit(unit: MeasurementUnit): MeasurementUnit {
         return unitRepository.save(unit)
@@ -18,7 +15,7 @@ class UnitServiceImpl : UnitService {
         return unitRepository.findDistinctByNameIsNotIn(emptyList())
     }
 
-    override fun getOneByName(name: String): MeasurementUnit? {
-        return unitRepository.findFirstByName(name)
+    override fun getAllByNames(names: List<String>): List<MeasurementUnit?> {
+        return unitRepository.findAllByNameIn(names)
     }
 }

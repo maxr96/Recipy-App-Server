@@ -10,7 +10,7 @@ class User (
         @Id
         @GeneratedValue
         @Column
-        var id: Long,
+        var id: Int,
 
         @Column
         var username: String,

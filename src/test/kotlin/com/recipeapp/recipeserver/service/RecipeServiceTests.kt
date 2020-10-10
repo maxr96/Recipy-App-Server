@@ -36,4 +36,23 @@ class RecipeServiceTests(@Autowired val recipeService: RecipeService) {
         recipeService.deleteRecipe(storedRecipe.id)
         assertThat(recipeService.getAllRecipes().isEmpty())
     }
+
+    @Test
+    @Transactional
+    fun `add new recipe with duplicated unit and ingredient names`() {
+        val p = Recipe(1, "desc", "title", "wesd", setOf(
+                RecipeIngredient(1, Ingredient(1, "meat"), MeasurementUnit(1, "pieces"), 20)),
+                Date.from(now()), User(1, "me", "me@email.com"))
+        assertThat(recipeService.getAllRecipes()).hasSize(0)
+        recipeService.addRecipe(p)
+        var recipes = recipeService.getAllRecipes()
+        assertThat(recipes).hasSize(1)
+
+        val p2 = Recipe(1, "desc", "title", "wesd", setOf(
+                RecipeIngredient(1, Ingredient(1, "meat"), MeasurementUnit(1, "pieces"), 20)),
+                Date.from(now()), User(1, "me", "me@email.com"))
+        recipeService.addRecipe(p2)
+        recipes = recipeService.getAllRecipes()
+        assertThat(recipes).hasSize(2)
+    }
 }
