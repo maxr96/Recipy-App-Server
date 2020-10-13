@@ -45,3 +45,10 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
 
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Run unit tests
+        run: ./gradlew test
