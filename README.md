@@ -3,8 +3,8 @@ This is a personal project created for learning purposes. Here I
 build a Spring Boot Recipe application using Kotlin and Gradle. The 
 database used is MariaDB. Other notable technologies: 
 - [x] Hibernate
-- [ ] MS Azure deployment
-- [ ] Liquibase 
+- [ ] MS Azure deployment (not yet done)
+- [ ] Liquibase (not yet done) 
 - [x] Trello Board for tracking progress (https://trello.com/b/z2fm1Jey/recip3-app)
 - [x] GitHub Actions
 - [x] Swagger UI 
