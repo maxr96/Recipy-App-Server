@@ -44,6 +44,7 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
     }
+    implementation("org.springdoc:springdoc-openapi-ui:1.4.8")
     implementation("org.liquibase:liquibase-gradle-plugin:2.0.4")
     liquibaseRuntime("org.liquibase.ext:liquibase-hibernate5:3.8")
 }
@@ -64,23 +65,3 @@ tasks.withType<KotlinCompile> {
         jvmTarget = "13"
     }
 }
-//TODO: Follow this post
-// https://stackoverflow.com/questions/44862889/how-to-use-liquibase-to-generate-a-changelog-from-diffs-between-a-database-and-p
-// to create custom liquibaseDiffChangelog task
-//task("liquibaseDiffChangelog", args=type:Java) {
-//        group = "liquibase"
-//
-//        classpath sourceSets.main .runtimeClasspath
-//                classpath configurations . liquibase
-//                main = "liquibase.integration.commandline.Main"
-//
-//        args "--changeLogFile="+diffLog
-//        args "--referenceUrl=hibernate:spring:com.mypackage.entity?hibernate.physical_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy&dialect=org.hibernate.dialect.MySQL5Dialect"
-//        args "--username=<username>"
-//        args "--password=<password>"
-//        args "--url=jdbc:mysql://<db_host_and_port>/<db_name>"
-//        args "--referenceDriver=liquibase.ext.hibernate.database.connection.HibernateDriver"
-//        args "diffChangeLog"
-//    }
-//}
-
