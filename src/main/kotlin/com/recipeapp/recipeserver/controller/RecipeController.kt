@@ -1,5 +1,7 @@
 package com.recipeapp.recipeserver.controller
 
+import com.recipeapp.recipeserver.dto.RecipeDTO
+import com.recipeapp.recipeserver.dto.mapToDto
 import com.recipeapp.recipeserver.model.Recipe
 import com.recipeapp.recipeserver.service.RecipeService
 import org.springframework.http.ResponseEntity
@@ -15,10 +17,10 @@ class RecipeController(
 )
 {
     @GetMapping
-    fun getRecipes(): ResponseEntity<Set<Recipe>> {
+    fun getRecipes(): ResponseEntity<List<RecipeDTO>> {
         val recipes = recipeService.getAllRecipes()
         return if(recipes.isNotEmpty()){
-            ResponseEntity.ok().body(recipes)
+            ResponseEntity.ok().body(recipes.map { it.mapToDto() })
         } else {
             ResponseEntity.notFound().build()
         }
@@ -26,17 +28,17 @@ class RecipeController(
     }
 
     @GetMapping("/{recipeId}")
-    fun getRecipe(@PathVariable recipeId: Int): ResponseEntity<Recipe> {
+    fun getRecipe(@PathVariable recipeId: Int): ResponseEntity<RecipeDTO> {
         val recipe = recipeService.getRecipeById(recipeId)
         return if(recipe.isPresent) {
-            ResponseEntity.ok().body(recipe.get())
+            ResponseEntity.ok().body(recipe.get().mapToDto())
         } else {
             ResponseEntity.notFound().build()
         }
     }
 
     @PostMapping
-    fun postRecipe(@RequestBody recipe: Recipe): ResponseEntity<Recipe> {
+    fun postRecipe(@RequestBody recipe: Recipe): ResponseEntity<RecipeDTO> {
         val addedRecipe = recipeService.addRecipe(recipe)
         val location: URI = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(addedRecipe.id).toUri()
@@ -44,7 +46,7 @@ class RecipeController(
     }
 
     @PutMapping
-    fun updateRecipe(@RequestBody recipe: Recipe): ResponseEntity<Recipe> {
+    fun updateRecipe(@RequestBody recipe: Recipe): ResponseEntity<RecipeDTO> {
         val changedRecipe = recipeService.changeRecipe(recipe) ?: return ResponseEntity.notFound().build()
         val location: URI = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(changedRecipe.id).toUri()
@@ -52,7 +54,7 @@ class RecipeController(
     }
 
     @DeleteMapping
-    fun deleteRecipe(@PathVariable id: Int): ResponseEntity<Recipe> {
+    fun deleteRecipe(@PathVariable id: Int): ResponseEntity<RecipeDTO> {
         recipeService.deleteRecipe(id)
         return ResponseEntity.noContent().build()
     }

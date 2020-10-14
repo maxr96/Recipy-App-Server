@@ -14,7 +14,7 @@ class AppSecurityConfig : WebSecurityConfigurerAdapter() {
     override fun configure(http: HttpSecurity) {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/recipes", "/recipes/{^[\\\\d]\$}", "/units").permitAll()
+                .antMatchers("/**", "/", "/recipes", "/recipes/{^[\\\\d]\$}", "/units", "/swagger-ui.html").permitAll()
         .antMatchers(HttpMethod.POST, "/units", "/recipes").permitAll()
                 .anyRequest().authenticated()
                 .and().csrf().disable()

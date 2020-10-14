@@ -1,5 +1,7 @@
 package com.recipeapp.recipeserver.controller
 
+import com.recipeapp.recipeserver.dto.MeasurementUnitDTO
+import com.recipeapp.recipeserver.dto.mapToDto
 import com.recipeapp.recipeserver.model.MeasurementUnit
 import com.recipeapp.recipeserver.service.UnitService
 import org.springframework.http.ResponseEntity
@@ -21,8 +23,8 @@ class UnitController (
     }
 
     @GetMapping
-    fun getUnits(): ResponseEntity<List<MeasurementUnit>> {
-        val units = unitService.getAllUnits()
+    fun getUnits(): ResponseEntity<List<MeasurementUnitDTO>> {
+        val units = unitService.getAllUnits().map { it.mapToDto() }
         return if (units.isNotEmpty()) {
             return ResponseEntity.ok().body(units)
         } else {
