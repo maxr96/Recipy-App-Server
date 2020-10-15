@@ -9,3 +9,9 @@ fun MeasurementUnit.mapToDto(): MeasurementUnitDTO {
             this.name
     )
 }
+
+fun MeasurementUnitDTO.mapToEntity(): MeasurementUnit {
+    return MeasurementUnit(
+            name = this.name
+    )
+}

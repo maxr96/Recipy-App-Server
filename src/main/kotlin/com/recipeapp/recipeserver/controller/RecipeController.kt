@@ -2,7 +2,7 @@ package com.recipeapp.recipeserver.controller
 
 import com.recipeapp.recipeserver.dto.RecipeDTO
 import com.recipeapp.recipeserver.dto.mapToDto
-import com.recipeapp.recipeserver.model.Recipe
+import com.recipeapp.recipeserver.dto.mapToEntity
 import com.recipeapp.recipeserver.service.RecipeService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -38,16 +38,16 @@ class RecipeController(
     }
 
     @PostMapping
-    fun postRecipe(@RequestBody recipe: Recipe): ResponseEntity<RecipeDTO> {
-        val addedRecipe = recipeService.addRecipe(recipe)
+    fun postRecipe(@RequestBody recipe: RecipeDTO): ResponseEntity<RecipeDTO> {
+        val addedRecipe = recipeService.addRecipe(recipe.mapToEntity())
         val location: URI = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(addedRecipe.id).toUri()
         return ResponseEntity.created(location).build()
     }
 
     @PutMapping
-    fun updateRecipe(@RequestBody recipe: Recipe): ResponseEntity<RecipeDTO> {
-        val changedRecipe = recipeService.changeRecipe(recipe) ?: return ResponseEntity.notFound().build()
+    fun updateRecipe(@RequestBody recipe: RecipeDTO): ResponseEntity<RecipeDTO> {
+        val changedRecipe = recipeService.changeRecipe(recipe.mapToEntity()) ?: return ResponseEntity.notFound().build()
         val location: URI = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(changedRecipe.id).toUri()
         return ResponseEntity.created(location).build()

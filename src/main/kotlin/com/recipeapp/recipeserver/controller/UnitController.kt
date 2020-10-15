@@ -2,7 +2,7 @@ package com.recipeapp.recipeserver.controller
 
 import com.recipeapp.recipeserver.dto.MeasurementUnitDTO
 import com.recipeapp.recipeserver.dto.mapToDto
-import com.recipeapp.recipeserver.model.MeasurementUnit
+import com.recipeapp.recipeserver.dto.mapToEntity
 import com.recipeapp.recipeserver.service.UnitService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -15,8 +15,8 @@ class UnitController (
         private val unitService: UnitService
 ) {
     @PostMapping
-    fun postUnit(@RequestBody unit: MeasurementUnit): ResponseEntity<MeasurementUnit> {
-        val addedUnit = unitService.addUnit(unit)
+    fun postUnit(@RequestBody unit: MeasurementUnitDTO): ResponseEntity<MeasurementUnitDTO> {
+        val addedUnit = unitService.addUnit(unit.mapToEntity())
         val location: URI = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(addedUnit.id).toUri()
         return ResponseEntity.created(location).build()

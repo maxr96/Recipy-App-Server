@@ -7,7 +7,7 @@ class RecipeIngredient (
         @Id
         @GeneratedValue
         @Column
-        var id: Int,
+        var id: Int = 0,
 
         @ManyToOne(cascade = [CascadeType.ALL])
         @JoinColumn(nullable = false, foreignKey = ForeignKey(name = "FK_ingredients_recipeingredient"))

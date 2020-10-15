@@ -8,7 +8,7 @@ class Recipe (
         @Id
         @GeneratedValue
         @Column
-        var id: Int,
+        var id: Int = 0,
 
         @Column(length = 50, nullable = false)
         var title: String,

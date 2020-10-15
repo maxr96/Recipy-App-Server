@@ -10,11 +10,11 @@ class User (
         @Id
         @GeneratedValue
         @Column
-        var id: Int,
+        var id: Int = 0,
 
         @Column
         var username: String,
 
         @Column
-        var email: String
+        var email: String = ""
 )
