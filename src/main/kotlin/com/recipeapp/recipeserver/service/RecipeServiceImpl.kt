@@ -2,13 +2,15 @@ package com.recipeapp.recipeserver.service
 
 import com.recipeapp.recipeserver.model.Recipe
 import com.recipeapp.recipeserver.repository.*
+import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
+import org.springframework.web.server.ResponseStatusException
 import java.util.*
 
 @Component
-class RecipeServiceImpl (var recipeRepository: RecipeRepository, var unitService: UnitService,
-var ingredientService: IngredientService) : RecipeService {
+class RecipeServiceImpl (val recipeRepository: RecipeRepository, val unitService: UnitService,
+val ingredientService: IngredientService, val userService: UserService) : RecipeService {
 
     @Transactional(readOnly = true)
     override fun getAllRecipes(): Set<Recipe> {
@@ -21,9 +23,16 @@ var ingredientService: IngredientService) : RecipeService {
     }
 
     override fun addRecipe(recipe: Recipe): Recipe {
+        val existingUser = userService.getFirstByName(recipe.author.username)
+        if(existingUser != null) {
+            recipe.author = existingUser
+        } else {
+            throw ResponseStatusException(HttpStatus.BAD_REQUEST, "Author Not Found")
+        }
         val existingUnits = unitService.getAllByNames(recipe.recipeIngredients.map{it.unit.name})
         val existingIngredients = ingredientService.getAllByNames(recipe.recipeIngredients.map{it.ingredient.name})
-        if(existingUnits.isNotEmpty() || existingIngredients.isNotEmpty()){
+
+        if(existingUnits.isNotEmpty() || existingIngredients.isNotEmpty()) {
             for((index, value) in recipe.recipeIngredients.withIndex()) {
                 val foundUnit = existingUnits.firstOrNull { it?.name == value.unit.name }
                 if (foundUnit != null) {
