@@ -2,6 +2,7 @@ package com.recipeapp.recipeserver.model
 
 import java.util.*
 import javax.persistence.*
+import kotlin.collections.HashSet
 
 @Entity
 class Recipe (
@@ -20,16 +21,22 @@ class Recipe (
         @Lob
         var instructions: String,
 
-        @OneToMany(targetEntity = RecipeIngredient::class, cascade = [CascadeType.ALL],
-                fetch = FetchType.LAZY, orphanRemoval = true)
-        @JoinColumn(name = "recipeId", referencedColumnName = "id",
-                foreignKey = ForeignKey(name = "FK_recipe_recipeingredients"))
-        var recipeIngredients: Set<RecipeIngredient>,
+        @Column(length = 255)
+        var imagePath: String = "",
+
+        @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "recipe")
+        var recipeIngredients: MutableSet<RecipeIngredient> = HashSet(),
 
         @Column(nullable = false)
         @Temporal(TemporalType.TIMESTAMP)
         var time: Date,
 
         @ManyToOne(cascade = [CascadeType.ALL])
-        @JoinColumn(nullable = false, foreignKey = ForeignKey(name = "FK_recipes_author"))
-        var author: User)
+        @JoinColumn(nullable = false, name = "author_id")
+        var author: User) {
+
+        fun addRecipeIngredient(ingredient: RecipeIngredient) {
+                this.recipeIngredients.add(ingredient)
+                ingredient.recipe = this
+        }
+}
