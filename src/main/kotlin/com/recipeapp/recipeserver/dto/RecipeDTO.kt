@@ -1,18 +1,20 @@
 package com.recipeapp.recipeserver.dto
 
+import com.recipeapp.recipeserver.model.Category
 import com.recipeapp.recipeserver.model.Recipe
 import com.recipeapp.recipeserver.model.User
 import java.util.*
 
-data class RecipeDTO (val id: Int = 0, val title: String, val description: String, val instructions: String,
+data class RecipeDTO (val id: Int = 0, val title: String, val description: String, val category: Category, val instructions: String,
                       val recipeIngredients: List<RecipeIngredientDTO>, val time: Date, val author: String,
-                        val imagePath: String = "")
+                      val imagePath: String = "")
 
 fun Recipe.mapToDto(): RecipeDTO {
     return RecipeDTO(
             this.id,
             this.title,
             this.description,
+            this.category,
             this.instructions,
             this.recipeIngredients.map { it.mapToDto() },
             this.time,
@@ -26,6 +28,7 @@ fun RecipeDTO.mapToEntity(): Recipe {
             this.id,
             this.title,
             this.description,
+            this.category,
             this.instructions,
             time = this.time,
             author = User(username = this.author),

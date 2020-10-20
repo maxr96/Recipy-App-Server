@@ -17,6 +17,9 @@ class Recipe (
         @Column(length = 200)
         var description: String,
 
+        @Enumerated(EnumType.ORDINAL)
+        var category: Category,
+
         @Column
         @Lob
         var instructions: String,

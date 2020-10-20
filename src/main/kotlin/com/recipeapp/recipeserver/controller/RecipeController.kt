@@ -4,6 +4,7 @@ import com.recipeapp.recipeserver.dto.RecipeDTO
 import com.recipeapp.recipeserver.dto.mapToDto
 import com.recipeapp.recipeserver.dto.mapToEntity
 import com.recipeapp.recipeserver.service.RecipeService
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
@@ -38,6 +39,7 @@ class RecipeController(
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     fun postRecipe(@RequestBody recipe: RecipeDTO): ResponseEntity<RecipeDTO> {
         val addedRecipe = recipeService.addRecipe(recipe.mapToEntity())
         val location: URI = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")

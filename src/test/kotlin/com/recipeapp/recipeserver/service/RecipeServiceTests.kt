@@ -27,7 +27,7 @@ class RecipeServiceTests(@Autowired val recipeService: RecipeService, @Autowired
     @Test
     @Transactional
     fun `add, retrieve and delete recipes`() {
-        val p = Recipe(1, "desc", "title", "wesd", "",
+        val p = Recipe(1, "desc", "title", Category.MAIN_DISH,"wesd", "",
         time = Date.from(now()),  author = User(1, "me", "me@email.com"))
         p.addRecipeIngredient(RecipeIngredient(1, Ingredient(1, "meat"), MeasurementUnit(1, "pieces"), 20, p))
         assertThat(recipeService.getAllRecipes()).hasSize(0)
@@ -47,7 +47,7 @@ class RecipeServiceTests(@Autowired val recipeService: RecipeService, @Autowired
     @Test
     @Transactional
     fun `add new recipe with duplicated unit and ingredient names`() {
-        val p = Recipe(1, "desc", "title", "wesd",
+        val p = Recipe(1, "desc", "title", Category.MAIN_DISH,"wesd",
                 time = Date.from(now()), author = User(1, "me", "me@email.com"))
         p.addRecipeIngredient(RecipeIngredient(1, Ingredient(1, "meat"), MeasurementUnit(1, "pieces"), 20, p))
         assertThat(recipeService.getAllRecipes()).hasSize(0)
@@ -55,7 +55,7 @@ class RecipeServiceTests(@Autowired val recipeService: RecipeService, @Autowired
         var recipes = recipeService.getAllRecipes()
         assertThat(recipes).hasSize(1)
 
-        val p2 = Recipe(1, "desc", "title", "wesd",
+        val p2 = Recipe(1, "desc", "title", Category.MAIN_DISH,"wesd",
                 time = Date.from(now()), author = User(1, "me", "me@email.com"))
         p2.addRecipeIngredient(RecipeIngredient(1, Ingredient(1, "meat"), MeasurementUnit(1, "pieces"), 20, p2))
         recipeService.addRecipe(p2)
