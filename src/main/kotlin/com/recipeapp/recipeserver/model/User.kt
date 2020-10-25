@@ -13,8 +13,11 @@ class User (
         var id: Int = 0,
 
         @Column
-        var username: String,
+        var username: String = "",
 
         @Column
-        var email: String = ""
+        var email: String = "",
+
+        @Column
+        var password: String = ""
 )
