@@ -34,14 +34,15 @@ class JWTAuthorizationFilter(authManager: AuthenticationManager) : BasicAuthenti
 
     fun getAuthentication(request: HttpServletRequest): Authentication? {
         val token = request.getHeader(HEADER_STRING)
+        val secret = environment.getProperty("SECRET") ?: SECRET
         if (token != null) {
             // parse the token.
             val user = Jwts.parserBuilder()
-                    .setSigningKey(SECRET)
+                    .setSigningKey(secret)
                     .build()
                     .parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
                     .body
-                    .getSubject()
+                    .subject
 
             return if (user != null)
                 UsernamePasswordAuthenticationToken(user, null, emptyList())

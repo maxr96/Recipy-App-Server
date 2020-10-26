@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional
 import java.time.Instant.now
 import java.util.*
 
-@ExtendWith(SpringExtension::class)
 @SpringBootTest
 @ActiveProfiles("test")
 class RecipeServiceTests(@Autowired val recipeService: RecipeService, @Autowired val userRepository: UserRepository) {

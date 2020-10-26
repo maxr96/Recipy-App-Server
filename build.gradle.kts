@@ -9,11 +9,12 @@ plugins {
     kotlin("plugin.allopen") version kotlinVersion
     id("org.jetbrains.kotlin.plugin.jpa") version kotlinVersion
     id("org.liquibase.gradle") version "2.0.4"
+    id("com.google.cloud.tools.jib") version "2.6.0"
 }
 
 group = "com.recipeApp"
 version = "0.0.1-SNAPSHOT"
-java.sourceCompatibility = JavaVersion.VERSION_13
+java.sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
     mavenCentral()
@@ -65,6 +66,6 @@ tasks.withType<Test> {
 tasks.withType<KotlinCompile> {
     kotlinOptions {
         freeCompilerArgs = listOf("-Xjsr305=strict")
-        jvmTarget = "13"
+        jvmTarget = "11"
     }
 }

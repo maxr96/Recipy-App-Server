@@ -48,9 +48,10 @@ class JWTAuthenticationFilter(authManager: AuthenticationManager) : UsernamePass
             auth: Authentication) {
         val keyBytes = Decoders.BASE64.decode(SECRET)
         val key: Key = Keys.hmacShaKeyFor(keyBytes)
+        val expirationTime = environment.getProperty("EXPIRATION_TIME") ?: EXPIRATION_TIME
         val jwt = Jwts.builder()
                 .setSubject((auth.principal as User).username)
-                .setExpiration(Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                .setExpiration(Date(System.currentTimeMillis() + expirationTime.toLong()))
                 .signWith(key, SignatureAlgorithm.HS512)
                 .compact()
         res.addHeader(HEADER_STRING, "$TOKEN_PREFIX $jwt")

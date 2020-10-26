@@ -10,31 +10,15 @@ on:
   pull_request:
     branches: [ master ]
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  CI:
-    # The type of runner that the job will run on
+  build:
     runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
       - name: Setup Java JDK
         uses: actions/setup-java@v1.4.3
         with:
-          # The Java version to make available on the path. Takes a whole or semver Java version, or 1.x syntax (e.g. 1.8 => Java 8.x). Early access versions can be specified in the form of e.g. 14-ea, 14.0.0-ea, or 14.0.0-ea.28
           java-version: 13
       - name: Cache Gradle packages
         uses: actions/cache@v2
@@ -44,7 +28,10 @@ jobs:
           restore-keys: ${{ runner.os }}-gradle
       - name: Build with Gradle
         run: ./gradlew build
-
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
       - name: Run unit tests
         run: ./gradlew test
 
@@ -57,3 +44,11 @@ jobs:
           files: build/test-results/**/*.xml
           report_individual_runs: true
           deduplicate_classes_by_file_name: false
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Set environment variables
+        env:
+          SECRET: SECRET
+          EXPIRATION_TIME: EXPIRATION_TIME
