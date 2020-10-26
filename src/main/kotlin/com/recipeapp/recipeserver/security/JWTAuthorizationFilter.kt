@@ -36,10 +36,11 @@ class JWTAuthorizationFilter(authManager: AuthenticationManager) : BasicAuthenti
         val token = request.getHeader(HEADER_STRING)
         if (token != null) {
             // parse the token.
-            val user = Jwts.parser()
+            val user = Jwts.parserBuilder()
                     .setSigningKey(SECRET)
+                    .build()
                     .parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
-                    .getBody()
+                    .body
                     .getSubject()
 
             return if (user != null)

@@ -47,7 +47,9 @@ dependencies {
     implementation("org.springdoc:springdoc-openapi-ui:1.4.8")
     implementation("org.liquibase:liquibase-gradle-plugin:2.0.4")
     liquibaseRuntime("org.liquibase.ext:liquibase-hibernate5:3.8")
-    implementation("io.jsonwebtoken:jjwt-api:0.11.2")
+    api("io.jsonwebtoken:jjwt-api:0.11.2")
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.2")
+    runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.2")
 }
 
 dependencyManagement {

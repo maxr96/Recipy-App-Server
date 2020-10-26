@@ -12,10 +12,10 @@ class User (
         @Column
         var id: Int = 0,
 
-        @Column
+        @Column(unique = true)
         var username: String = "",
 
-        @Column
+        @Column(unique = true)
         var email: String = "",
 
         @Column

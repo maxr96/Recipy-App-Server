@@ -3,6 +3,8 @@ package com.recipeapp.recipeserver.security
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
+import io.jsonwebtoken.io.Decoders
+import io.jsonwebtoken.security.Keys
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
@@ -11,7 +13,8 @@ import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.User
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import java.io.IOException
-import java.util.Date
+import java.security.Key
+import java.util.*
 import javax.servlet.FilterChain
 import javax.servlet.ServletException
 import javax.servlet.http.HttpServletRequest
@@ -43,11 +46,13 @@ class JWTAuthenticationFilter(authManager: AuthenticationManager) : UsernamePass
             req: HttpServletRequest,
             res: HttpServletResponse, chain: FilterChain?,
             auth: Authentication) {
-        val JWT = Jwts.builder()
+        val keyBytes = Decoders.BASE64.decode(SECRET)
+        val key: Key = Keys.hmacShaKeyFor(keyBytes)
+        val jwt = Jwts.builder()
                 .setSubject((auth.principal as User).username)
                 .setExpiration(Date(System.currentTimeMillis() + EXPIRATION_TIME))
-                .signWith(SignatureAlgorithm.HS512, SECRET)
+                .signWith(key, SignatureAlgorithm.HS512)
                 .compact()
-        res.addHeader(HEADER_STRING, "$TOKEN_PREFIX $JWT")
+        res.addHeader(HEADER_STRING, "$TOKEN_PREFIX $jwt")
     }
 }
