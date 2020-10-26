@@ -7,6 +7,6 @@ import org.springframework.stereotype.Component
 @Component
 class UserServiceImpl (val userRepository: UserRepository) : UserService  {
     override fun getFirstByName(username: String): User? {
-        return userRepository.findByUsername(username);
+        return userRepository.findFirstByUsername(username);
     }
 }

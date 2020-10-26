@@ -15,7 +15,7 @@ open class UserDetailsServiceImpl(val userRepository: UserRepository) : UserDeta
     @Transactional(readOnly = true)
     @Throws(UsernameNotFoundException::class)
     override fun loadUserByUsername(username: String): UserDetails {
-        val user = userRepository.findByUsername(username) ?: throw UsernameNotFoundException(username)
+        val user = userRepository.findFirstByUsername(username) ?: throw UsernameNotFoundException(username)
         return User(user.username, user.password, emptyList())
     }
 

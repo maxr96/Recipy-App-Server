@@ -3,6 +3,7 @@ package com.recipeapp.recipeserver.service
 import com.recipeapp.recipeserver.model.*
 import com.recipeapp.recipeserver.repository.UserRepository
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
@@ -22,6 +23,11 @@ class RecipeServiceTests(@Autowired val recipeService: RecipeService, @Autowired
     @BeforeTransaction
     fun addUserToDb() {
         userRepository.save(User(username = "me", email = "me@email.com"))
+    }
+
+    @AfterEach
+    fun flush() {
+        userRepository.flush();
     }
 
     @Test
