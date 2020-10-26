@@ -49,6 +49,7 @@ jobs:
     needs: test
     steps:
       - name: Set environment variables
+        run: echo Expirations time set to $EXPIRATION_TIME!
         env:
           SECRET: SECRET
           EXPIRATION_TIME: EXPIRATION_TIME
