@@ -26,7 +26,6 @@ jobs:
         run: ./gradlew build -Dspring.profiles.active=prod
   deploy:
     runs-on: ubuntu-latest
-    needs: test
     steps:
       - name: Set environment variables
         run: echo Expirations time set to $EXPIRATION_TIME!
