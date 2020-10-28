@@ -22,19 +22,14 @@ jobs:
           path: ~/.gradle/caches
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
           restore-keys: ${{ runner.os }}-gradle
-      - name: Set environment variables
-        run: echo Expirations time set to $EXPIRATION_TIME!
+      - name: Build with Gradle
+        run: ./gradlew build -Dspring.profiles.active=prod
         env:
           SECRET: SECRET
           EXPIRATION_TIME: EXPIRATION_TIME
-          AZURE_WEBAPP_PACKAGE_PATH: ${{ github.workspace }}
-          AZURE_WEBAPP_PUBLISH_PROFILE: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          AZURE_WEBAPP_NAME: recipiz-api
           DB_URL: DB_URL
           DB_USER: DB_USER
           DB_PASSWORD: DB_PASSWORD
-      - name: Build with Gradle
-        run: ./gradlew build -Dspring.profiles.active=prod
   deploy:
     runs-on: ubuntu-latest
     steps:
@@ -46,8 +41,8 @@ jobs:
       - name: Deploy to Azure WebApp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: ${{ env.AZURE_WEBAPP_NAME }}
-          package: '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/build/libs/*.jar'
+          app-name: recipiz-api
+          package: '${{ github.workspace }}/build/libs/*.jar'
 
       - name: Azure logout
         run: |
