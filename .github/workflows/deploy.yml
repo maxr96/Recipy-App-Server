@@ -22,11 +22,6 @@ jobs:
           path: ~/.gradle/caches
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
           restore-keys: ${{ runner.os }}-gradle
-      - name: Build with Gradle
-        run: ./gradlew build -Dspring.profiles.active=prod
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
       - name: Set environment variables
         run: echo Expirations time set to $EXPIRATION_TIME!
         env:
@@ -38,10 +33,22 @@ jobs:
           DB_URL: DB_URL
           DB_USER: DB_USER
           DB_PASSWORD: DB_PASSWORD
+      - name: Build with Gradle
+        run: ./gradlew build -Dspring.profiles.active=prod
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Login via Azure CLI
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: 'Deploy to Azure WebApp'
+      - name: Deploy to Azure WebApp
         uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
-          publish-profile: ${{ env.AZURE_WEBAPP_PUBLISH_PROFILE }}
           package: '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/build/libs/*.jar'
+
+      - name: Azure logout
+        run: |
+          az logout
