@@ -1,9 +1,6 @@
 package com.recipeapp.recipeserver.model
 
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.Id
+import javax.persistence.*
 
 @Entity
 class User (
@@ -19,5 +16,11 @@ class User (
         var email: String = "",
 
         @Column
-        var password: String = ""
+        var password: String = "",
+
+        @ManyToMany(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+        @JoinTable(name = "user_roles",
+                joinColumns = [JoinColumn(name = "user_id")],
+                inverseJoinColumns = [JoinColumn(name = "role_id")])
+        var roles: MutableSet<Role> = mutableSetOf(Role())
 )

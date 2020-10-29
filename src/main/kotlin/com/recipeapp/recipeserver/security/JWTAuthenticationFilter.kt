@@ -54,6 +54,7 @@ class JWTAuthenticationFilter(authManager: AuthenticationManager) : UsernamePass
                 .setExpiration(Date(System.currentTimeMillis() + expirationTime.toLong()))
                 .signWith(key, SignatureAlgorithm.HS512)
                 .compact()
+        res.addHeader("access-control-expose-headers", HEADER_STRING)
         res.addHeader(HEADER_STRING, "$TOKEN_PREFIX $jwt")
     }
 }

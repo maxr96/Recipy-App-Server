@@ -8,11 +8,12 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
+
 @RestController
-@RequestMapping("/sign-up")
+@RequestMapping
 class SignupController(val userRepository: UserRepository, val bCryptPasswordEncoder: BCryptPasswordEncoder) {
 
-    @PostMapping
+    @PostMapping("/sign-up")
     fun signUp(@RequestBody user: User) {
         user.password = bCryptPasswordEncoder.encode(user.password)
         userRepository.save(user)
