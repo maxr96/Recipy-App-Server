@@ -16,13 +16,17 @@ database used is MariaDB. Other notable technologies:
    - [x] Get and extend possible measurement units
    - [x] Retrieve list of available ingredients
    - [ ] Search for recipes by ingredients
-   - [ ] Login the user
+   - [x] Create and Login a user
+   - [ ] Assign different user roles to the user (admin)
+   - [ ] Get favourite recipes of the user
+   - [ ] Get most recent and liked recipes
    - [ ] and more...
 ## Database Model
 The main entities used for the database model:
 - MeasurementUnit - stores the name of different units, e.g. gram, spoon.
 - Ingredient - stores the name of different ingredients, e.g. black pepper, tomato.
 - RecipeIngredient - stores the ingredient with its amount and measurement unit used in a recipe.
-- Recipe - stores the actual recipe with title, description, ingredients, time it was posted and author.
-- Author - stores the user of the website with their username and email.
+- Recipe - stores the actual recipe with title, description, ingredients, time it was posted and updated, time to prepare the recipe and author.
+- User - stores the user of the website with their username, email and encrypted password.
+- Roles - defines with roles can user have (for now there are three roles: USER, PM, ADMIN).
 ![Cookbook database schema](cookbook_db_schema.png)
