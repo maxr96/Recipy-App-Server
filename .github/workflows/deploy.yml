@@ -42,10 +42,9 @@ jobs:
 
       - name: Deploy to Azure WebApp
         uses: azure/webapps-deploy@v2
-        run: ./gradlew build -Dspring.profiles.active=prod
         with:
           app-name: recipiz-api
-          package: '${{ github.workspace }}build/libs/*.jar'
+          package: '${{ github.workspace }}/build/libs/*.jar'
 
       - name: Azure logout
         run: |
