@@ -28,13 +28,13 @@ open class AppSecurityConfig(@Qualifier("userDetailsServiceImpl") val userDetail
     override fun configure(http: HttpSecurity) {
         http.csrf().disable().authorizeRequests().antMatchers("/authenticate").permitAll()
                 .antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
-                .antMatchers(HttpMethod.POST, "/sign-in").permitAll()
+                .antMatchers(HttpMethod.GET, "/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**", "/swagger-resources", "/swagger-resources/*").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(JWTAuthenticationFilter(authenticationManager()))
                 .addFilter(JWTAuthorizationFilter(authenticationManager()))
                 // this disables session creation on Spring Security
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
     }
 
     override fun configure(auth: AuthenticationManagerBuilder?) {

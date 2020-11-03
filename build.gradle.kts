@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     val kotlinVersion = "1.4.10"
-    id("org.springframework.boot") version "2.3.4.RELEASE"
+    id("org.springframework.boot") version "2.3.5.RELEASE"
     id("io.spring.dependency-management") version "1.0.10.RELEASE"
     kotlin("jvm") version kotlinVersion
     kotlin("plugin.spring") version kotlinVersion
@@ -20,7 +20,7 @@ repositories {
     mavenCentral()
 }
 
-extra["azureVersion"] = "2.3.3"
+extra["azureVersion"] = "2.3.5"
 
 allOpen {
     annotation("javax.persistence.Entity")
