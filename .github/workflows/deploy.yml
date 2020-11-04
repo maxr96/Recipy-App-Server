@@ -40,7 +40,7 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: recipiz-api
-          package: './build/libs/*.jar'
+          package: '${{ github.workspace }}/build/libs/*.jar'
 
       - name: Azure logout
         run: |
