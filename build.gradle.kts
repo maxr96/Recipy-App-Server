@@ -8,7 +8,6 @@ plugins {
     kotlin("plugin.spring") version kotlinVersion
     kotlin("plugin.allopen") version kotlinVersion
     id("org.jetbrains.kotlin.plugin.jpa") version kotlinVersion
-    id("org.liquibase.gradle") version "2.0.4"
     id("com.google.cloud.tools.jib") version "2.6.0"
 }
 
@@ -38,7 +37,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.hibernate:hibernate-core:5.4.21.Final")
-    implementation ("org.mariadb.jdbc:mariadb-java-client:2.7.0")
+    implementation ("com.microsoft.sqlserver:mssql-jdbc:9.1.0.jre11-preview")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly ("com.h2database:h2")
@@ -46,8 +45,6 @@ dependencies {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
     }
     implementation("org.springdoc:springdoc-openapi-ui:1.4.8")
-    implementation("org.liquibase:liquibase-gradle-plugin:2.0.4")
-    liquibaseRuntime("org.liquibase.ext:liquibase-hibernate5:3.8")
     api("io.jsonwebtoken:jjwt-api:0.11.2")
     runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.2")
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.2")
