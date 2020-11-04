@@ -3,6 +3,7 @@ package com.recipeapp.recipeserver.model
 import javax.persistence.*
 
 @Entity
+@Table(name = "RecipeIngredients")
 class RecipeIngredient (
         @Id
         @GeneratedValue

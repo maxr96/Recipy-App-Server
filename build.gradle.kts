@@ -26,7 +26,6 @@ allOpen {
     annotation("javax.persistence.Embeddable")
     annotation("javax.persistence.MappedSuperclass")
 }
-val liquibaseRuntime by configurations
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
@@ -37,7 +36,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.hibernate:hibernate-core:5.4.21.Final")
-    implementation ("com.microsoft.sqlserver:mssql-jdbc:9.1.0.jre11-preview")
+    implementation ("com.microsoft.sqlserver:mssql-jdbc:8.2.2.jre11")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly ("com.h2database:h2")

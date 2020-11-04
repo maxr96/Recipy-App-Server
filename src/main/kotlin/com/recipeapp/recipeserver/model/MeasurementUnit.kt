@@ -3,6 +3,7 @@ package com.recipeapp.recipeserver.model
 import javax.persistence.*
 
 @Entity
+@Table(name = "Units", uniqueConstraints = [UniqueConstraint(columnNames = ["name"], name = "uniqueUnitNameConstraint")])
 class MeasurementUnit(
         @Id
         @GeneratedValue

@@ -3,16 +3,18 @@ package com.recipeapp.recipeserver.model
 import javax.persistence.*
 
 @Entity
+@Table(name = "Users", uniqueConstraints = [UniqueConstraint(columnNames = ["username"], name = "uniqueUserNameConstraint"),
+UniqueConstraint(columnNames = ["email"], name = "uniqueEmailConstraint")])
 class User (
         @Id
         @GeneratedValue
         @Column
         var id: Int = 0,
 
-        @Column(unique = true)
+        @Column
         var username: String = "",
 
-        @Column(unique = true)
+        @Column
         var email: String = "",
 
         @Column

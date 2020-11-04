@@ -8,6 +8,7 @@ import javax.persistence.*
 import kotlin.collections.HashSet
 
 @Entity
+@Table(name = "Recipes")
 class Recipe (
         @Id
         @GeneratedValue
