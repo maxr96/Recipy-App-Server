@@ -1,6 +1,5 @@
 package com.recipeapp.recipeserver.model
 
-import org.hibernate.annotations.NaturalId
 import javax.persistence.*
 
 
@@ -12,7 +11,6 @@ class Role (
     var id: Int = 0,
 
     @Enumerated(EnumType.STRING)
-    @NaturalId
     @Column(length = 60)
-    private var name: RoleName = RoleName.USER
+    var name: RoleName = RoleName.USER
 )
