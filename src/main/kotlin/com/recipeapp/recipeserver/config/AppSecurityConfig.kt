@@ -18,7 +18,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 
 @Configuration
 @EnableWebSecurity
-open class AppSecurityConfig(@Qualifier("userDetailsServiceImpl") val userDetailsService: UserDetailsService) : WebSecurityConfigurerAdapter() {
+class AppSecurityConfig(@Qualifier("userDetailsServiceImpl") val userDetailsService: UserDetailsService) : WebSecurityConfigurerAdapter() {
 
     @Bean
     fun bCryptPasswordEncoder(): BCryptPasswordEncoder {
@@ -29,6 +29,7 @@ open class AppSecurityConfig(@Qualifier("userDetailsServiceImpl") val userDetail
         http.csrf().disable().authorizeRequests().antMatchers("/authenticate").permitAll()
                 .antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
                 .antMatchers(HttpMethod.GET, "/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**", "/swagger-resources", "/swagger-resources/*").permitAll()
+                .antMatchers(HttpMethod.GET, "/admin").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(JWTAuthenticationFilter(authenticationManager()))
