@@ -15,7 +15,6 @@ import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 
-
 @Configuration
 @EnableWebSecurity
 class AppSecurityConfig(@Qualifier("userDetailsServiceImpl") val userDetailsService: UserDetailsService) : WebSecurityConfigurerAdapter() {
@@ -27,15 +26,15 @@ class AppSecurityConfig(@Qualifier("userDetailsServiceImpl") val userDetailsServ
 
     override fun configure(http: HttpSecurity) {
         http.csrf().disable().authorizeRequests().antMatchers("/authenticate").permitAll()
-                .antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
-                .antMatchers(HttpMethod.GET, "/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**", "/swagger-resources", "/swagger-resources/*").permitAll()
-                .antMatchers(HttpMethod.GET, "/admin").hasAuthority("ADMIN")
-                .anyRequest().authenticated()
-                .and()
-                .addFilter(JWTAuthenticationFilter(authenticationManager()))
-                .addFilter(JWTAuthorizationFilter(authenticationManager()))
-                // this disables session creation on Spring Security
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
+            .antMatchers(HttpMethod.GET, "/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**", "/swagger-resources", "/swagger-resources/*").permitAll()
+            .antMatchers(HttpMethod.GET, "/admin").hasAuthority("ADMIN")
+            .anyRequest().authenticated()
+            .and()
+            .addFilter(JWTAuthenticationFilter(authenticationManager()))
+            .addFilter(JWTAuthorizationFilter(authenticationManager()))
+            // this disables session creation on Spring Security
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
     }
 
     override fun configure(auth: AuthenticationManagerBuilder?) {

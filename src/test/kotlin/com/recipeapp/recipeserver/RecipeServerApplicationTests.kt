@@ -9,5 +9,4 @@ class RecipeServerApplicationTests {
     @Test
     fun contextLoads() {
     }
-
 }

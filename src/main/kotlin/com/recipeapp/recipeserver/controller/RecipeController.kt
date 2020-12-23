@@ -10,28 +10,25 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 import java.net.URI
 
-
 @RestController
 @RequestMapping("/recipes")
 class RecipeController(
-        private val recipeService: RecipeService
-)
-{
+    private val recipeService: RecipeService
+) {
     @GetMapping
     fun getRecipes(): ResponseEntity<List<RecipeDTO>> {
         val recipes = recipeService.getAllRecipes()
-        return if(recipes.isNotEmpty()){
+        return if (recipes.isNotEmpty()) {
             ResponseEntity.ok().body(recipes.map { it.mapToDto() })
         } else {
             ResponseEntity.notFound().build()
         }
-
     }
 
     @GetMapping("/{recipeId}")
     fun getRecipe(@PathVariable recipeId: Int): ResponseEntity<RecipeDTO> {
         val recipe = recipeService.getRecipeById(recipeId)
-        return if(recipe.isPresent) {
+        return if (recipe.isPresent) {
             ResponseEntity.ok().body(recipe.get().mapToDto())
         } else {
             ResponseEntity.notFound().build()
@@ -43,7 +40,7 @@ class RecipeController(
     fun postRecipe(@RequestBody recipe: RecipeDTO): ResponseEntity<RecipeDTO> {
         val addedRecipe = recipeService.addRecipe(recipe.mapToEntity())
         val location: URI = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(addedRecipe.id).toUri()
+            .buildAndExpand(addedRecipe.id).toUri()
         return ResponseEntity.created(location).build()
     }
 
@@ -51,7 +48,7 @@ class RecipeController(
     fun updateRecipe(@RequestBody recipe: RecipeDTO): ResponseEntity<RecipeDTO> {
         val changedRecipe = recipeService.changeRecipe(recipe.mapToEntity()) ?: return ResponseEntity.notFound().build()
         val location: URI = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(changedRecipe.id).toUri()
+            .buildAndExpand(changedRecipe.id).toUri()
         return ResponseEntity.created(location).build()
     }
 

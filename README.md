@@ -9,6 +9,7 @@ database used is SQL Server. Other notable technologies:
 - [x] GitHub Actions
 - [x] Swagger UI 
 - [x] SonarCloud (https://sonarcloud.io/dashboard?id=maxr96_Recipy-App-Server)
+- [x] Spotless with ktlint for automatic code formatting
 - [ ] and more soon...
 
 # Main features of the API

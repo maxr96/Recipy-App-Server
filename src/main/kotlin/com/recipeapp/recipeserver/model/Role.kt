@@ -2,10 +2,9 @@ package com.recipeapp.recipeserver.model
 
 import javax.persistence.*
 
-
 @Entity
 @Table(name = "Roles")
-class Role (
+class Role(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Int = 0,

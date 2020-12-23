@@ -13,12 +13,13 @@ import javax.servlet.ServletException
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
-
 class JWTAuthorizationFilter(authManager: AuthenticationManager) : BasicAuthenticationFilter(authManager) {
     @Throws(IOException::class, ServletException::class)
-    override fun doFilterInternal(request: HttpServletRequest,
-                                  response: HttpServletResponse,
-                                  chain: FilterChain) {
+    override fun doFilterInternal(
+        request: HttpServletRequest,
+        response: HttpServletResponse,
+        chain: FilterChain
+    ) {
         val header = request.getHeader(HEADER_STRING)
 
         if (header == null || !header.startsWith(TOKEN_PREFIX)) {
@@ -38,11 +39,11 @@ class JWTAuthorizationFilter(authManager: AuthenticationManager) : BasicAuthenti
         if (token != null) {
             // parse the token.
             val user = Jwts.parserBuilder()
-                    .setSigningKey(secret)
-                    .build()
-                    .parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
-                    .body
-                    .subject
+                .setSigningKey(secret)
+                .build()
+                .parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
+                .body
+                .subject
 
             return if (user != null)
                 UsernamePasswordAuthenticationToken(user, null, emptyList())

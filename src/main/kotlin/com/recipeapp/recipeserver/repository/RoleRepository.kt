@@ -5,5 +5,5 @@ import com.recipeapp.recipeserver.model.RoleName
 import org.springframework.data.jpa.repository.JpaRepository
 
 public interface RoleRepository : JpaRepository<Role, Int> {
-    fun findByName(roleName: RoleName): Role?;
+    fun findByName(roleName: RoleName): Role?
 }

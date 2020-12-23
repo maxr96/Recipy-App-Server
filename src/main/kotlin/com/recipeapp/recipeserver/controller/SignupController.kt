@@ -13,18 +13,17 @@ import org.springframework.web.bind.annotation.RestController
 import java.sql.SQLException
 import java.util.regex.Pattern
 
-
 @RestController
 @RequestMapping
 class SignupController(val userRepository: UserRepository, val bCryptPasswordEncoder: BCryptPasswordEncoder) {
 
     companion object {
-       val PASSWORD_PATTERN: Pattern = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,32}$")
+        val PASSWORD_PATTERN: Pattern = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,32}$")
     }
     @PostMapping("/sign-up")
     fun signUp(@RequestBody user: User): ResponseEntity<String> {
         val m = PASSWORD_PATTERN.matcher(user.password)
-        if(!m.find()){
+        if (!m.find()) {
             return ResponseEntity("INVALID_PASSWORD", HttpStatus.BAD_REQUEST)
         }
         user.password = bCryptPasswordEncoder.encode(user.password)
@@ -37,7 +36,7 @@ class SignupController(val userRepository: UserRepository, val bCryptPasswordEnc
                 val rootCauseMessage = rootCause.message ?: ""
                 return when {
                     rootCauseMessage.contains("uniqueEmailConstraint") -> ResponseEntity("EMAIL_EXISTS", HttpStatus.BAD_REQUEST)
-                    rootCauseMessage.contains("uniqueUserNameConstraint") -> ResponseEntity("USERNAME_EXISTS",  HttpStatus.BAD_REQUEST)
+                    rootCauseMessage.contains("uniqueUserNameConstraint") -> ResponseEntity("USERNAME_EXISTS", HttpStatus.BAD_REQUEST)
                     else -> ResponseEntity(HttpStatus.BAD_REQUEST)
                 }
             }

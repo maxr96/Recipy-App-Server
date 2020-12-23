@@ -5,7 +5,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 import java.util.*
 
-
 class AppUserDetails(private val user: User) : UserDetails {
     override fun getAuthorities(): Collection<GrantedAuthority?> {
         val roles: Set<Role> = user.roles

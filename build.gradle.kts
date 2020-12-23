@@ -9,6 +9,7 @@ plugins {
     kotlin("plugin.allopen") version kotlinVersion
     id("org.jetbrains.kotlin.plugin.jpa") version kotlinVersion
     id("com.google.cloud.tools.jib") version "2.6.0"
+    id("com.diffplug.gradle.spotless") version "4.5.1"
 }
 
 group = "com.recipeApp"
@@ -36,10 +37,10 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.hibernate:hibernate-core:5.4.21.Final")
-    implementation ("com.microsoft.sqlserver:mssql-jdbc:8.2.2.jre11")
+    implementation("com.microsoft.sqlserver:mssql-jdbc:8.2.2.jre11")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
-    runtimeOnly ("com.h2database:h2")
+    runtimeOnly("com.h2database:h2")
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
     }
@@ -63,5 +64,16 @@ tasks.withType<KotlinCompile> {
     kotlinOptions {
         freeCompilerArgs = listOf("-Xjsr305=strict")
         jvmTarget = "11"
+    }
+}
+
+configure<com.diffplug.gradle.spotless.SpotlessExtension> {
+    kotlin {
+        target("**/*.kt")
+        ktlint("0.40.0").userData(mapOf("disabled_rules" to "no-wildcard-imports"))
+    }
+    kotlinGradle {
+        target("*.gradle.kts")
+        ktlint("0.40.0")
     }
 }

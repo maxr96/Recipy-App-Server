@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import com.recipeapp.recipeserver.model.User as AppUser
 
-
 @Service
 class UserDetailsServiceImpl(val userRepository: UserRepository) : UserDetailsService {
     @Transactional(readOnly = true)
