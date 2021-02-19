@@ -43,7 +43,7 @@ class RecipeServiceTests(@Autowired val recipeService: RecipeService, @Autowired
         assertThat(p.title).isEqualTo(storedRecipe.title)
         assertThat(p.description).isEqualTo(storedRecipe.description)
         val storedRecipeOne = recipeService.getRecipeById(storedRecipe.id)
-        assertThat(storedRecipe).isEqualToComparingFieldByField(storedRecipeOne.get())
+        assertThat(storedRecipe).usingRecursiveComparison().isEqualTo(storedRecipeOne.get())
         assertThat(p.recipeIngredients.first().amount).isEqualTo(storedRecipe.recipeIngredients.first().amount)
         recipeService.deleteRecipe(storedRecipe.id)
         assertThat(recipeService.getAllRecipes().isEmpty())
