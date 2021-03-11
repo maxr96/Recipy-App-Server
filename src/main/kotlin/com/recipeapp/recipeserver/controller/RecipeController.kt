@@ -1,6 +1,7 @@
 package com.recipeapp.recipeserver.controller
 
 import com.recipeapp.recipeserver.dto.RecipeDTO
+import com.recipeapp.recipeserver.dto.external.ExternalRecipeDTO
 import com.recipeapp.recipeserver.dto.mapToDto
 import com.recipeapp.recipeserver.dto.mapToEntity
 import com.recipeapp.recipeserver.service.RecipeService
@@ -52,9 +53,16 @@ class RecipeController(
         return ResponseEntity.created(location).build()
     }
 
-    @DeleteMapping
-    fun deleteRecipe(@PathVariable id: Int): ResponseEntity<RecipeDTO> {
-        recipeService.deleteRecipe(id)
+    @DeleteMapping("/{recipeId}")
+    fun deleteRecipe(@PathVariable recipeId: Int): ResponseEntity<RecipeDTO> {
+        recipeService.deleteRecipe(recipeId)
         return ResponseEntity.noContent().build()
+    }
+
+    @PostMapping("/external")
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    fun createRecipeFromExternalAPI(@RequestBody recipe: ExternalRecipeDTO): ResponseEntity<RecipeDTO> {
+        println(recipe)
+        return ResponseEntity.ok().build()
     }
 }

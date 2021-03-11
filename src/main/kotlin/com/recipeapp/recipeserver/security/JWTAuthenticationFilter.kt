@@ -1,6 +1,7 @@
 package com.recipeapp.recipeserver.security
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.recipeapp.recipeserver.model.AppUserDetails
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.io.Decoders
@@ -10,7 +11,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.AuthenticationException
 import org.springframework.security.core.GrantedAuthority
-import org.springframework.security.core.userdetails.User
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import java.io.IOException
 import java.security.Key
@@ -53,7 +53,7 @@ class JWTAuthenticationFilter(authManager: AuthenticationManager) : UsernamePass
         val key: Key = Keys.hmacShaKeyFor(keyBytes)
         val expirationTime = environment.getProperty("EXPIRATION_TIME") ?: EXPIRATION_TIME
         val jwt = Jwts.builder()
-            .setSubject((auth.principal as User).username)
+            .setSubject((auth.principal as AppUserDetails).username)
             .setExpiration(Date(System.currentTimeMillis() + expirationTime.toLong()))
             .signWith(key, SignatureAlgorithm.HS512)
             .compact()

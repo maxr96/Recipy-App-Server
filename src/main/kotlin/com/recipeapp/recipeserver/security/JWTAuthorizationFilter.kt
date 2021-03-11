@@ -33,7 +33,7 @@ class JWTAuthorizationFilter(authManager: AuthenticationManager) : BasicAuthenti
         chain.doFilter(request, response)
     }
 
-    fun getAuthentication(request: HttpServletRequest): Authentication? {
+    private fun getAuthentication(request: HttpServletRequest): Authentication? {
         val token = request.getHeader(HEADER_STRING)
         val secret = environment.getProperty("SECRET") ?: SECRET
         if (token != null) {

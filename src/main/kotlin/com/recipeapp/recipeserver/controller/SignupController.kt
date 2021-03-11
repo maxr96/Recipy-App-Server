@@ -2,6 +2,7 @@ package com.recipeapp.recipeserver.controller
 
 import com.recipeapp.recipeserver.model.User
 import com.recipeapp.recipeserver.repository.UserRepository
+import com.recipeapp.recipeserver.security.SIGN_UP_URL
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -20,7 +21,7 @@ class SignupController(val userRepository: UserRepository, val bCryptPasswordEnc
     companion object {
         val PASSWORD_PATTERN: Pattern = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,32}$")
     }
-    @PostMapping("/sign-up")
+    @PostMapping(SIGN_UP_URL)
     fun signUp(@RequestBody user: User): ResponseEntity<String> {
         val m = PASSWORD_PATTERN.matcher(user.password)
         if (!m.find()) {
