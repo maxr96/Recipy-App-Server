@@ -24,6 +24,9 @@ class Recipe(
     @Enumerated(EnumType.ORDINAL)
     var category: Category,
 
+    @Column(length = 60)
+    var cuisine: String,
+
     @Column
     @Lob
     var instructions: String,
@@ -50,7 +53,11 @@ class Recipe(
     @UpdateTimestamp
     @Column
     @Temporal(TemporalType.TIMESTAMP)
-    var updateDate: Date = Date.from(Instant.now())
+    var updateDate: Date = Date.from(Instant.now()),
+
+    //Only used for external recipes
+    @Column(length = 255)
+    var creditsText: String = ""
 ) {
     fun addRecipeIngredient(ingredient: RecipeIngredient) {
         this.recipeIngredients.add(ingredient)
