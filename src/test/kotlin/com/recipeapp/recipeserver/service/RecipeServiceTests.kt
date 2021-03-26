@@ -10,8 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.transaction.annotation.Transactional
-import java.time.Instant.now
-import java.util.*
+import java.time.Duration
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -32,7 +31,7 @@ class RecipeServiceTests(@Autowired val recipeService: RecipeService, @Autowired
     fun `add, retrieve and delete recipes`() {
         val p = Recipe(
             1, "desc", "title", Category.MAIN_DISH, "wesd", "",
-            time = Date.from(now()), author = User(1, "me", "me@email.com")
+            time = Duration.ZERO, author = User(1, "me", "me@email.com")
         )
         p.addRecipeIngredient(RecipeIngredient(1, Ingredient(1, "meat"), MeasurementUnit(1, "pieces"), 20, p))
         assertThat(recipeService.getAllRecipes()).hasSize(0)
@@ -53,8 +52,8 @@ class RecipeServiceTests(@Autowired val recipeService: RecipeService, @Autowired
     @Transactional
     fun `add new recipe with duplicated unit and ingredient names`() {
         val p = Recipe(
-            1, "desc", "title", Category.MAIN_DISH, "wesd",
-            time = Date.from(now()), author = User(1, "me", "me@email.com")
+            1, "desc", "title", Category.MAIN_DISH, "wesd", "instr",
+            time = Duration.ZERO, author = User(1, "me", "me@email.com")
         )
         p.addRecipeIngredient(RecipeIngredient(1, Ingredient(1, "meat"), MeasurementUnit(1, "pieces"), 20, p))
         assertThat(recipeService.getAllRecipes()).hasSize(0)
@@ -63,8 +62,8 @@ class RecipeServiceTests(@Autowired val recipeService: RecipeService, @Autowired
         assertThat(recipes).hasSize(1)
 
         val p2 = Recipe(
-            1, "desc", "title", Category.MAIN_DISH, "wesd",
-            time = Date.from(now()), author = User(1, "me", "me@email.com")
+            1, "desc", "title", Category.MAIN_DISH, "wesd", "instr",
+            time = Duration.ZERO, author = User(1, "me", "me@email.com")
         )
         p2.addRecipeIngredient(RecipeIngredient(1, Ingredient(1, "meat"), MeasurementUnit(1, "pieces"), 20, p2))
         recipeService.addRecipe(p2)
