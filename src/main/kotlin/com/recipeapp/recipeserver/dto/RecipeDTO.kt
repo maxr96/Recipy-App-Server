@@ -12,7 +12,7 @@ data class RecipeDTO(
     val cuisine: String,
     val category: Category,
     val instructions: String,
-    val recipeIngredients: List<RecipeIngredientDTO>,
+    val ingredients: List<RecipeIngredientDTO>,
     val time: Duration,
     val author: String = "",
     val imagePath: String = "",
@@ -48,6 +48,6 @@ fun RecipeDTO.mapToEntity(username: String): Recipe {
         imagePath = this.imagePath,
         creditsText = this.creditsText
     )
-    recipeIngredients.forEach { recipe.addRecipeIngredient(it.mapToEntity(recipe)) }
+    ingredients.forEach { recipe.addRecipeIngredient(it.mapToEntity(recipe)) }
     return recipe
 }

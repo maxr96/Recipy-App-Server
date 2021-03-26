@@ -4,7 +4,6 @@ import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.UpdateTimestamp
 import java.time.Duration
 import java.time.Instant
-import java.time.LocalTime
 import java.util.*
 import javax.persistence.*
 import kotlin.collections.HashSet
@@ -56,7 +55,7 @@ class Recipe(
     @Temporal(TemporalType.TIMESTAMP)
     var updateDate: Date = Date.from(Instant.now()),
 
-    //Only used for external recipes
+    // Only used for external recipes
     @Column(length = 255)
     var creditsText: String = ""
 ) {
