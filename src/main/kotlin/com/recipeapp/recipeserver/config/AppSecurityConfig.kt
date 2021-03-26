@@ -25,8 +25,8 @@ class AppSecurityConfig(@Qualifier("userDetailsServiceImpl") val userDetailsServ
     }
 
     override fun configure(http: HttpSecurity) {
-        http.csrf().disable().authorizeRequests().antMatchers("/login").permitAll()
-            .antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
+        http.csrf().disable().authorizeRequests().antMatchers(HttpMethod.POST,"/login", SIGN_UP_URL).permitAll()
+            .antMatchers(HttpMethod.GET, "/recipes**").permitAll()
             .antMatchers(HttpMethod.GET, "/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**", "/swagger-resources", "/swagger-resources/*").permitAll()
             .antMatchers(HttpMethod.GET, "/admin").hasAuthority("ADMIN")
             .anyRequest().authenticated()

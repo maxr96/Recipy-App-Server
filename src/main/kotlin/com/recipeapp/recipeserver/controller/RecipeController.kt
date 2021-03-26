@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 import java.net.URI
+import java.security.Principal
 
 @RestController
 @RequestMapping("/recipes")
@@ -38,16 +39,16 @@ class RecipeController(
 
     @PostMapping
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    fun postRecipe(@RequestBody recipe: RecipeDTO): ResponseEntity<RecipeDTO> {
-        val addedRecipe = recipeService.addRecipe(recipe.mapToEntity())
+    fun postRecipe(@RequestBody recipe: RecipeDTO, principal: Principal): ResponseEntity<RecipeDTO> {
+        val addedRecipe = recipeService.addRecipe(recipe.mapToEntity(principal.name))
         val location: URI = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
             .buildAndExpand(addedRecipe.id).toUri()
         return ResponseEntity.created(location).build()
     }
 
     @PutMapping
-    fun updateRecipe(@RequestBody recipe: RecipeDTO): ResponseEntity<RecipeDTO> {
-        val changedRecipe = recipeService.changeRecipe(recipe.mapToEntity()) ?: return ResponseEntity.notFound().build()
+    fun updateRecipe(@RequestBody recipe: RecipeDTO, principal: Principal): ResponseEntity<RecipeDTO> {
+        val changedRecipe = recipeService.changeRecipe(recipe.mapToEntity(principal.name)) ?: return ResponseEntity.notFound().build()
         val location: URI = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
             .buildAndExpand(changedRecipe.id).toUri()
         return ResponseEntity.created(location).build()

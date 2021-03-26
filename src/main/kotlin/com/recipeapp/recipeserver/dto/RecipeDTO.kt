@@ -3,7 +3,7 @@ package com.recipeapp.recipeserver.dto
 import com.recipeapp.recipeserver.model.Category
 import com.recipeapp.recipeserver.model.Recipe
 import com.recipeapp.recipeserver.model.User
-import java.util.*
+import java.time.Duration
 
 data class RecipeDTO(
     val id: Int = 0,
@@ -13,10 +13,10 @@ data class RecipeDTO(
     val category: Category,
     val instructions: String,
     val recipeIngredients: List<RecipeIngredientDTO>,
-    val time: Date,
-    val author: String,
+    val time: Duration,
+    val author: String = "",
     val imagePath: String = "",
-    val creditsText: String
+    val creditsText: String = ""
 )
 
 fun Recipe.mapToDto(): RecipeDTO {
@@ -35,7 +35,7 @@ fun Recipe.mapToDto(): RecipeDTO {
     )
 }
 
-fun RecipeDTO.mapToEntity(): Recipe {
+fun RecipeDTO.mapToEntity(username: String): Recipe {
     val recipe = Recipe(
         this.id,
         this.title,
@@ -44,7 +44,7 @@ fun RecipeDTO.mapToEntity(): Recipe {
         this.cuisine,
         this.instructions,
         time = this.time,
-        author = User(username = this.author),
+        author = User(username = username),
         imagePath = this.imagePath,
         creditsText = this.creditsText
     )

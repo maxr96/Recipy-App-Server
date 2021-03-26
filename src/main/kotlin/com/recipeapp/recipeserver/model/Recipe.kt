@@ -2,7 +2,9 @@ package com.recipeapp.recipeserver.model
 
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.UpdateTimestamp
+import java.time.Duration
 import java.time.Instant
+import java.time.LocalTime
 import java.util.*
 import javax.persistence.*
 import kotlin.collections.HashSet
@@ -38,8 +40,7 @@ class Recipe(
     var recipeIngredients: MutableSet<RecipeIngredient> = HashSet(),
 
     @Column(nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    var time: Date,
+    var time: Duration,
 
     @ManyToOne(cascade = [CascadeType.ALL])
     @JoinColumn(nullable = false, name = "author_id")
