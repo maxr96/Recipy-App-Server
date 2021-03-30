@@ -13,6 +13,7 @@ class RecipeServiceImpl(
     val recipeRepository: RecipeRepository,
     val unitService: UnitService,
     val ingredientService: IngredientService,
+    val tagsService: TagService,
     val userService: UserService
 ) : RecipeService {
 
@@ -35,6 +36,7 @@ class RecipeServiceImpl(
         }
         val existingUnits = unitService.getAllByNames(recipe.recipeIngredients.map { it.unit.name })
         val existingIngredients = ingredientService.getAllByNames(recipe.recipeIngredients.map { it.ingredient.name })
+        val existingTags = tagsService.getAllByNames(recipe.tags.map { it.name })
 
         if (existingUnits.isNotEmpty() || existingIngredients.isNotEmpty()) {
             for ((index, value) in recipe.recipeIngredients.withIndex()) {
@@ -45,6 +47,15 @@ class RecipeServiceImpl(
                 val foundIngredient = existingIngredients.firstOrNull { it?.name == value.ingredient.name }
                 if (foundIngredient != null) {
                     recipe.recipeIngredients.elementAt(index).ingredient = foundIngredient
+                }
+            }
+        }
+
+        if (existingTags.isNotEmpty()) {
+            for ((index, v) in recipe.tags.withIndex()) {
+                val foundTag = existingTags.firstOrNull { it?.name == v.name }
+                if (foundTag != null) {
+                    recipe.tags.elementAt(index).id = foundTag.id
                 }
             }
         }

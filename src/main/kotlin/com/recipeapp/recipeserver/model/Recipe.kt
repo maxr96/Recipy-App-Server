@@ -41,6 +41,18 @@ class Recipe(
     @Column(nullable = false)
     var time: Duration,
 
+    // additional tags, like vegetarian, vegan, healthy, cheap, etc.
+    @ManyToMany(
+        fetch = FetchType.LAZY,
+        cascade = [CascadeType.MERGE]
+    )
+    @JoinTable(
+        name = "recipe_tags",
+        joinColumns = [JoinColumn(name = "recipe_id")],
+        inverseJoinColumns = [ JoinColumn(name = "tag_id") ]
+    )
+    var tags: MutableSet<Tag>,
+
     @ManyToOne(cascade = [CascadeType.ALL])
     @JoinColumn(nullable = false, name = "author_id")
     var author: User,

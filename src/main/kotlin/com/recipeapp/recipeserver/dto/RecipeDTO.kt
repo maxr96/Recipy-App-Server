@@ -2,6 +2,7 @@ package com.recipeapp.recipeserver.dto
 
 import com.recipeapp.recipeserver.model.Category
 import com.recipeapp.recipeserver.model.Recipe
+import com.recipeapp.recipeserver.model.Tag
 import com.recipeapp.recipeserver.model.User
 import java.time.Duration
 
@@ -16,7 +17,8 @@ data class RecipeDTO(
     val time: Duration,
     val author: String = "",
     val imagePath: String = "",
-    val creditsText: String = ""
+    val creditsText: String = "",
+    val tags: MutableSet<String>
 )
 
 fun Recipe.mapToDto(): RecipeDTO {
@@ -31,7 +33,8 @@ fun Recipe.mapToDto(): RecipeDTO {
         this.time,
         this.author.username,
         this.imagePath,
-        this.creditsText
+        this.creditsText,
+        this.tags.map { it.name }.toMutableSet()
     )
 }
 
@@ -46,7 +49,8 @@ fun RecipeDTO.mapToEntity(username: String): Recipe {
         time = this.time,
         author = User(username = username),
         imagePath = this.imagePath,
-        creditsText = this.creditsText
+        creditsText = this.creditsText,
+        tags = this.tags.map { Tag(name = it) }.toMutableSet()
     )
     ingredients.forEach { recipe.addRecipeIngredient(it.mapToEntity(recipe)) }
     return recipe

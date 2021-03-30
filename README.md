@@ -30,4 +30,5 @@ The main entities used for the database model:
 - Recipe - stores the actual recipe with title, description, ingredients, time it was posted and updated, time to prepare the recipe and author.
 - User - stores the user of the website with their username, email and encrypted password.
 - Roles - defines with roles can user have (for now there are three roles: USER, PM, ADMIN).
+- Tags - stores specific tags associated with the recipe, e.g. healthy, vegetarian, cheap etc.
 ![Cookbook database schema](cookbook_db_schema.png)
