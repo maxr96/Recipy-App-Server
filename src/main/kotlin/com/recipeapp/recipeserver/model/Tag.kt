@@ -3,8 +3,8 @@ package com.recipeapp.recipeserver.model
 import javax.persistence.*
 
 @Entity
-@Table(name = "Units", uniqueConstraints = [UniqueConstraint(columnNames = ["name"], name = "uniqueUnitNameConstraint")])
-class MeasurementUnit(
+@Table(name = "Tags", uniqueConstraints = [UniqueConstraint(columnNames = ["name"], name = "uniqueTagNameConstraint")])
+class Tag(
     @Id
     @GeneratedValue
     @Column

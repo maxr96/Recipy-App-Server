@@ -6,12 +6,12 @@ data class MeasurementUnitDTO(val name: String)
 
 fun MeasurementUnit.mapToDto(): MeasurementUnitDTO {
     return MeasurementUnitDTO(
-            this.name
+        this.name
     )
 }
 
 fun MeasurementUnitDTO.mapToEntity(): MeasurementUnit {
     return MeasurementUnit(
-            name = this.name
+        name = this.name
     )
 }

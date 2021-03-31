@@ -11,14 +11,14 @@ import java.net.URI
 
 @RestController
 @RequestMapping("/units")
-class UnitController (
-        private val unitService: UnitService
+class UnitController(
+    private val unitService: UnitService
 ) {
     @PostMapping
     fun postUnit(@RequestBody unit: MeasurementUnitDTO): ResponseEntity<MeasurementUnitDTO> {
         val addedUnit = unitService.addUnit(unit.mapToEntity())
         val location: URI = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(addedUnit.id).toUri()
+            .buildAndExpand(addedUnit.id).toUri()
         return ResponseEntity.created(location).build()
     }
 

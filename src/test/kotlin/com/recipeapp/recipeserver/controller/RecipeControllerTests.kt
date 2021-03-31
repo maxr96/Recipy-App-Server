@@ -13,6 +13,5 @@ class RecipeControllerTests {
 
     @Test
     fun `get all recipes`() {
-
     }
 }

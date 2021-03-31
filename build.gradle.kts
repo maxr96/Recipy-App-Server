@@ -1,15 +1,14 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    val kotlinVersion = "1.4.10"
-    id("org.springframework.boot") version "2.3.5.RELEASE"
-    id("io.spring.dependency-management") version "1.0.10.RELEASE"
+    val kotlinVersion = "1.4.31"
+    id("org.springframework.boot") version "2.4.3"
+    id("io.spring.dependency-management") version "1.0.11.RELEASE"
     kotlin("jvm") version kotlinVersion
     kotlin("plugin.spring") version kotlinVersion
     kotlin("plugin.allopen") version kotlinVersion
     id("org.jetbrains.kotlin.plugin.jpa") version kotlinVersion
-    id("org.liquibase.gradle") version "2.0.4"
-    id("com.google.cloud.tools.jib") version "2.6.0"
+    id("com.diffplug.gradle.spotless") version "4.5.1"
 }
 
 group = "com.recipeApp"
@@ -20,43 +19,28 @@ repositories {
     mavenCentral()
 }
 
-extra["azureVersion"] = "2.3.5"
-
 allOpen {
     annotation("javax.persistence.Entity")
     annotation("javax.persistence.Embeddable")
     annotation("javax.persistence.MappedSuperclass")
 }
-val liquibaseRuntime by configurations
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-    implementation("com.microsoft.azure:azure-active-directory-spring-boot-starter")
-    implementation("com.microsoft.azure:azure-spring-boot-starter")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation("org.hibernate:hibernate-core:5.4.21.Final")
-    implementation ("org.mariadb.jdbc:mariadb-java-client:2.7.0")
+    implementation("org.hibernate:hibernate-core:5.4.28.Final")
+    implementation("com.microsoft.sqlserver:mssql-jdbc:9.2.0.jre11")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
-    runtimeOnly ("com.h2database:h2")
-    testImplementation("org.springframework.boot:spring-boot-starter-test") {
-        exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
-    }
-    implementation("org.springdoc:springdoc-openapi-ui:1.4.8")
-    implementation("org.liquibase:liquibase-gradle-plugin:2.0.4")
-    liquibaseRuntime("org.liquibase.ext:liquibase-hibernate5:3.8")
+    runtimeOnly("com.h2database:h2")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    implementation("org.springdoc:springdoc-openapi-ui:1.5.5")
     api("io.jsonwebtoken:jjwt-api:0.11.2")
     runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.2")
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.2")
-}
-
-dependencyManagement {
-    imports {
-        mavenBom("com.microsoft.azure:azure-spring-boot-bom:${property("azureVersion")}")
-    }
 }
 
 tasks.withType<Test> {
@@ -66,6 +50,18 @@ tasks.withType<Test> {
 tasks.withType<KotlinCompile> {
     kotlinOptions {
         freeCompilerArgs = listOf("-Xjsr305=strict")
+        useIR = true
         jvmTarget = "11"
+    }
+}
+
+configure<com.diffplug.gradle.spotless.SpotlessExtension> {
+    kotlin {
+        target("**/*.kt")
+        ktlint("0.40.0").userData(mapOf("disabled_rules" to "no-wildcard-imports"))
+    }
+    kotlinGradle {
+        target("*.gradle.kts")
+        ktlint("0.40.0")
     }
 }

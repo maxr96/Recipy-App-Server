@@ -15,10 +15,9 @@ import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 
-
 @Configuration
 @EnableWebSecurity
-open class AppSecurityConfig(@Qualifier("userDetailsServiceImpl") val userDetailsService: UserDetailsService) : WebSecurityConfigurerAdapter() {
+class AppSecurityConfig(@Qualifier("userDetailsServiceImpl") val userDetailsService: UserDetailsService) : WebSecurityConfigurerAdapter() {
 
     @Bean
     fun bCryptPasswordEncoder(): BCryptPasswordEncoder {
@@ -26,15 +25,16 @@ open class AppSecurityConfig(@Qualifier("userDetailsServiceImpl") val userDetail
     }
 
     override fun configure(http: HttpSecurity) {
-        http.csrf().disable().authorizeRequests().antMatchers("/authenticate").permitAll()
-                .antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
-                .antMatchers(HttpMethod.GET, "/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**", "/swagger-resources", "/swagger-resources/*").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .addFilter(JWTAuthenticationFilter(authenticationManager()))
-                .addFilter(JWTAuthorizationFilter(authenticationManager()))
-                // this disables session creation on Spring Security
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        http.csrf().disable().authorizeRequests().antMatchers(HttpMethod.POST, "/login", SIGN_UP_URL).permitAll()
+            .antMatchers(HttpMethod.GET, "/recipes**").permitAll()
+            .antMatchers(HttpMethod.GET, "/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**", "/swagger-resources", "/swagger-resources/*").permitAll()
+            .antMatchers(HttpMethod.GET, "/admin").hasAuthority("ADMIN")
+            .anyRequest().authenticated()
+            .and()
+            .addFilter(JWTAuthenticationFilter(authenticationManager()))
+            .addFilter(JWTAuthorizationFilter(authenticationManager()))
+            // this disables session creation on Spring Security
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
     }
 
     override fun configure(auth: AuthenticationManagerBuilder?) {

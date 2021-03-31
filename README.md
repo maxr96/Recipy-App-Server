@@ -1,14 +1,15 @@
 # Recipe App (Server side implementation) 
 This is a personal project created for learning purposes. Here I 
 build a Spring Boot Recipe application using Kotlin and Gradle. The 
-database used is MariaDB. Other notable technologies: 
+database used is SQL Server. Other notable technologies: 
 - [x] Hibernate
-- [ ] MS Azure deployment (not yet done)
-- [ ] Liquibase (not yet done) 
+- [x] MS Azure deployment
+- [ ] Flyway 
 - [x] Trello Board for tracking progress (https://trello.com/b/z2fm1Jey/recip3-app)
 - [x] GitHub Actions
 - [x] Swagger UI 
 - [x] SonarCloud (https://sonarcloud.io/dashboard?id=maxr96_Recipy-App-Server)
+- [x] Spotless with ktlint for automatic code formatting
 - [ ] and more soon...
 
 # Main features of the API
@@ -29,4 +30,5 @@ The main entities used for the database model:
 - Recipe - stores the actual recipe with title, description, ingredients, time it was posted and updated, time to prepare the recipe and author.
 - User - stores the user of the website with their username, email and encrypted password.
 - Roles - defines with roles can user have (for now there are three roles: USER, PM, ADMIN).
+- Tags - stores specific tags associated with the recipe, e.g. healthy, vegetarian, cheap etc.
 ![Cookbook database schema](cookbook_db_schema.png)
