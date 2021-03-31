@@ -9,6 +9,7 @@ plugins {
     kotlin("plugin.allopen") version kotlinVersion
     id("org.jetbrains.kotlin.plugin.jpa") version kotlinVersion
     id("com.diffplug.gradle.spotless") version "4.5.1"
+    id("war")
 }
 
 group = "com.recipeApp"
@@ -53,6 +54,10 @@ tasks.withType<KotlinCompile> {
         useIR = true
         jvmTarget = "11"
     }
+}
+
+tasks.withType<org.springframework.boot.gradle.tasks.bundling.BootWar>().configureEach {
+    launchScript()
 }
 
 configure<com.diffplug.gradle.spotless.SpotlessExtension> {
