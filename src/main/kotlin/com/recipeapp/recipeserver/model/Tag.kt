@@ -11,5 +11,5 @@ class Tag(
     var id: Short = 0,
 
     @Column(length = 50, unique = true, nullable = false)
-    var name: String
+    var name: String,
 )

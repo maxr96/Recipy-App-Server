@@ -14,7 +14,7 @@ class RecipeServiceImpl(
     val unitService: UnitService,
     val ingredientService: IngredientService,
     val tagsService: TagService,
-    val userService: UserService
+    val userService: UserService,
 ) : RecipeService {
 
     @Transactional(readOnly = true)

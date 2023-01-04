@@ -11,7 +11,7 @@ fun RecipeIngredient.mapToDto(): RecipeIngredientDTO {
     return RecipeIngredientDTO(
         this.ingredient.name,
         this.unit.name,
-        this.amount
+        this.amount,
     )
 }
 
@@ -20,6 +20,6 @@ fun RecipeIngredientDTO.mapToEntity(recipe: Recipe): RecipeIngredient {
         ingredient = Ingredient(name = name),
         unit = MeasurementUnit(name = unit),
         amount = amount,
-        recipe = recipe
+        recipe = recipe,
     )
 }

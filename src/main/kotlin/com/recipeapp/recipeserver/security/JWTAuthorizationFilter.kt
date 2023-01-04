@@ -18,7 +18,7 @@ class JWTAuthorizationFilter(authManager: AuthenticationManager) : BasicAuthenti
     override fun doFilterInternal(
         request: HttpServletRequest,
         response: HttpServletResponse,
-        chain: FilterChain
+        chain: FilterChain,
     ) {
         val header = request.getHeader(HEADER_STRING)
 
@@ -45,10 +45,11 @@ class JWTAuthorizationFilter(authManager: AuthenticationManager) : BasicAuthenti
                 .body
                 .subject
 
-            return if (user != null)
+            return if (user != null) {
                 UsernamePasswordAuthenticationToken(user, null, emptyList())
-            else
+            } else {
                 null
+            }
         }
         return null
     }

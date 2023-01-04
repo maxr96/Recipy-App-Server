@@ -5,16 +5,17 @@ import javax.validation.constraints.Size
 
 data class MeasurementUnitDTO(
     @Size(min = 2, max = 50)
-    val name: String)
+    val name: String,
+)
 
 fun MeasurementUnit.mapToDto(): MeasurementUnitDTO {
     return MeasurementUnitDTO(
-        this.name
+        this.name,
     )
 }
 
 fun MeasurementUnitDTO.mapToEntity(): MeasurementUnit {
     return MeasurementUnit(
-        name = this.name
+        name = this.name,
     )
 }

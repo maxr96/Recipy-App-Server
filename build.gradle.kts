@@ -8,7 +8,7 @@ plugins {
     kotlin("plugin.spring") version kotlinVersion
     kotlin("plugin.allopen") version kotlinVersion
     id("org.jetbrains.kotlin.plugin.jpa") version kotlinVersion
-    id("com.diffplug.gradle.spotless") version "4.5.1"
+    id("com.diffplug.spotless") version "6.12.1"
 }
 
 group = "com.recipeApp"
@@ -58,10 +58,12 @@ tasks.withType<KotlinCompile> {
 configure<com.diffplug.gradle.spotless.SpotlessExtension> {
     kotlin {
         target("**/*.kt")
-        ktlint("0.40.0").userData(mapOf("disabled_rules" to "no-wildcard-imports"))
+        ktlint("0.48.1")
+            .setUseExperimental(true)
+            .editorConfigOverride(mapOf("disabled_rules" to "no-wildcard-imports"))
     }
     kotlinGradle {
         target("*.gradle.kts")
-        ktlint("0.40.0")
+        ktlint("0.48.1")
     }
 }

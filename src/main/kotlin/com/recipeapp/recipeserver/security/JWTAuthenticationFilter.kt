@@ -29,7 +29,7 @@ class JWTAuthenticationFilter(authManager: AuthenticationManager) : UsernamePass
     @Throws(AuthenticationException::class, IOException::class, ServletException::class)
     override fun attemptAuthentication(
         req: HttpServletRequest,
-        res: HttpServletResponse
+        res: HttpServletResponse,
     ): Authentication {
         val creds = ObjectMapper()
             .readValue(req.inputStream, ApplicationUser::class.java)
@@ -37,8 +37,8 @@ class JWTAuthenticationFilter(authManager: AuthenticationManager) : UsernamePass
             UsernamePasswordAuthenticationToken(
                 creds.username,
                 creds.password,
-                emptyList<GrantedAuthority>()
-            )
+                emptyList<GrantedAuthority>(),
+            ),
         )
     }
 
@@ -47,7 +47,7 @@ class JWTAuthenticationFilter(authManager: AuthenticationManager) : UsernamePass
         req: HttpServletRequest,
         res: HttpServletResponse,
         chain: FilterChain?,
-        auth: Authentication
+        auth: Authentication,
     ) {
         val keyBytes = Decoders.BASE64.decode(SECRET)
         val key: Key = Keys.hmacShaKeyFor(keyBytes)

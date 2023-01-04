@@ -1,5 +1,10 @@
 package com.recipeapp.recipeserver.dto.external
 
+import com.recipeapp.recipeserver.model.Ingredient
+import com.recipeapp.recipeserver.model.MeasurementUnit
+import com.recipeapp.recipeserver.model.Recipe
+import com.recipeapp.recipeserver.model.RecipeIngredient
+
 data class ExternalExtendedIngredient(
     val amount: Double,
     val image: String,
@@ -9,5 +14,14 @@ data class ExternalExtendedIngredient(
     val original: String,
     val originalName: String,
     val originalString: String,
-    val unit: String
+    val unit: String,
 )
+
+fun ExternalExtendedIngredient.mapToInternalEntity(recipe: Recipe): RecipeIngredient {
+    return RecipeIngredient(
+        amount = amount.toInt().toShort(),
+        ingredient = Ingredient(name = name),
+        unit = MeasurementUnit(name = unit),
+        recipe = recipe,
+    )
+}

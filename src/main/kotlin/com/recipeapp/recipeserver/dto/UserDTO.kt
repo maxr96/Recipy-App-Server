@@ -7,6 +7,6 @@ data class UserDTO(val username: String, val email: String)
 fun User.mapToDto(): UserDTO {
     return UserDTO(
         this.username,
-        this.email
+        this.email,
     )
 }

@@ -1,5 +1,11 @@
 package com.recipeapp.recipeserver.dto.external
 
+import com.recipeapp.recipeserver.model.Category
+import com.recipeapp.recipeserver.model.Recipe
+import com.recipeapp.recipeserver.model.Tag
+import com.recipeapp.recipeserver.model.User
+import java.time.Duration
+
 data class ExternalRecipe(
     val aggregateLikes: Int,
     val analyzedInstructions: List<ExternalInstruction>,
@@ -15,5 +21,22 @@ data class ExternalRecipe(
     val servings: Int,
     val sourceUrl: String,
     val summary: String,
-    val title: String
+    val title: String,
 )
+
+fun ExternalRecipe.mapToInternalEntity(): Recipe {
+    val recipe = Recipe(
+        title = title,
+        description = summary,
+        category = Category.APPETIZER, // TODO: Introduce proper category converter.
+        creditsText = creditsText,
+        cuisine = cuisines.first(), // TODO: Shall we consider storing more cuisines?
+        author = User(),
+        imagePath = image,
+        instructions = extendedIngredients.map { it.originalString }.toString(),
+        time = Duration.ofMinutes(readyInMinutes.toLong()),
+        tags = dishTypes.map { dishType -> Tag(name = dishType) }.toMutableSet(), // TODO: May be not a proper tag
+    )
+    extendedIngredients.forEach { recipe.addRecipeIngredient(it.mapToInternalEntity(recipe)) }
+    return recipe
+}

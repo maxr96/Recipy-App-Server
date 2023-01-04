@@ -22,8 +22,8 @@ class OpenApiConfig {
                             .name(securitySchemeName)
                             .type(SecurityScheme.Type.HTTP)
                             .scheme("bearer")
-                            .bearerFormat("JWT")
-                    )
+                            .bearerFormat("JWT"),
+                    ),
             )
     }
 }

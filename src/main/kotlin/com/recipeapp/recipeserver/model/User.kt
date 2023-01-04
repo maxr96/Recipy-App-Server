@@ -7,8 +7,8 @@ import javax.persistence.*
     name = "Users",
     uniqueConstraints = [
         UniqueConstraint(columnNames = ["username"], name = "uniqueUserNameConstraint"),
-        UniqueConstraint(columnNames = ["email"], name = "uniqueEmailConstraint")
-    ]
+        UniqueConstraint(columnNames = ["email"], name = "uniqueEmailConstraint"),
+    ],
 )
 class User(
     @Id
@@ -29,7 +29,7 @@ class User(
     @JoinTable(
         name = "user_roles",
         joinColumns = [JoinColumn(name = "user_id")],
-        inverseJoinColumns = [JoinColumn(name = "role_id")]
+        inverseJoinColumns = [JoinColumn(name = "role_id")],
     )
-    var roles: MutableSet<Role> = mutableSetOf(Role())
+    var roles: MutableSet<Role> = mutableSetOf(Role()),
 )

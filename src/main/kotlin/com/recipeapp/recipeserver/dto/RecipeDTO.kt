@@ -18,7 +18,7 @@ data class RecipeDTO(
     val author: String = "",
     val imagePath: String = "",
     val creditsText: String = "",
-    val tags: MutableSet<String>
+    val tags: MutableSet<String>,
 )
 
 fun Recipe.mapToDto(): RecipeDTO {
@@ -34,7 +34,7 @@ fun Recipe.mapToDto(): RecipeDTO {
         this.author.username,
         this.imagePath,
         this.creditsText,
-        this.tags.map { it.name }.toMutableSet()
+        this.tags.map { it.name }.toMutableSet(),
     )
 }
 
@@ -50,7 +50,7 @@ fun RecipeDTO.mapToEntity(username: String): Recipe {
         author = User(username = username),
         imagePath = this.imagePath,
         creditsText = this.creditsText,
-        tags = this.tags.map { Tag(name = it) }.toMutableSet()
+        tags = this.tags.map { Tag(name = it) }.toMutableSet(),
     )
     ingredients.forEach { recipe.addRecipeIngredient(it.mapToEntity(recipe)) }
     return recipe

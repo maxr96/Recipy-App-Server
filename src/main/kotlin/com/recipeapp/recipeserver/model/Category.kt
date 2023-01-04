@@ -9,5 +9,5 @@ enum class Category {
     DESSERT,
     MAIN_DISH,
     SAUCE,
-    SIDE_DISH
+    SIDE_DISH,
 }
