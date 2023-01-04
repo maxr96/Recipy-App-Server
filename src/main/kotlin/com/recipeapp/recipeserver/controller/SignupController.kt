@@ -19,7 +19,8 @@ import java.util.regex.Pattern
 class SignupController(val userRepository: UserRepository, val bCryptPasswordEncoder: BCryptPasswordEncoder) {
 
     companion object {
-        val PASSWORD_PATTERN: Pattern = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,32}$")
+        //TODO: Document the password pattern matcher and move it to a pattern annotation.
+        val PASSWORD_PATTERN: Pattern = Pattern.compile("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,32}$")
     }
     @PostMapping(SIGN_UP_URL)
     fun signUp(@RequestBody user: User): ResponseEntity<String> {

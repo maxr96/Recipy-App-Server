@@ -1,9 +1,9 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    val kotlinVersion = "1.4.31"
-    id("org.springframework.boot") version "2.4.3"
-    id("io.spring.dependency-management") version "1.0.11.RELEASE"
+    val kotlinVersion = "1.8.0"
+    id("org.springframework.boot") version "2.7.7"
+    id("io.spring.dependency-management") version "1.1.0"
     kotlin("jvm") version kotlinVersion
     kotlin("plugin.spring") version kotlinVersion
     kotlin("plugin.allopen") version kotlinVersion
@@ -31,16 +31,17 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation("org.hibernate:hibernate-core:5.4.28.Final")
-    implementation("com.microsoft.sqlserver:mssql-jdbc:9.2.0.jre11")
+    implementation("org.hibernate:hibernate-core:5.6.14.Final")
+    implementation("org.hibernate.validator:hibernate-validator:8.0.0.Final")
+    implementation("org.postgresql:postgresql:42.5.1")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("com.h2database:h2")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-    implementation("org.springdoc:springdoc-openapi-ui:1.5.5")
-    api("io.jsonwebtoken:jjwt-api:0.11.2")
-    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.2")
-    runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.2")
+    implementation("org.springdoc:springdoc-openapi-ui:1.6.14")
+    api("io.jsonwebtoken:jjwt-api:0.11.5")
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
+    runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
 }
 
 tasks.withType<Test> {
@@ -50,7 +51,6 @@ tasks.withType<Test> {
 tasks.withType<KotlinCompile> {
     kotlinOptions {
         freeCompilerArgs = listOf("-Xjsr305=strict")
-        useIR = true
         jvmTarget = "11"
     }
 }
