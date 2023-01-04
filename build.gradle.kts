@@ -13,7 +13,7 @@ plugins {
 
 group = "com.recipeApp"
 version = "0.0.1-SNAPSHOT"
-java.sourceCompatibility = JavaVersion.VERSION_11
+java.sourceCompatibility = JavaVersion.VERSION_17
 
 repositories {
     mavenCentral()
@@ -31,6 +31,7 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+//  Update Hibernate with update to Spring Boot 3 as it needs Jakarta packages
     implementation("org.hibernate:hibernate-core:5.6.14.Final")
     implementation("org.hibernate.validator:hibernate-validator:8.0.0.Final")
     implementation("org.postgresql:postgresql:42.5.1")
@@ -51,7 +52,7 @@ tasks.withType<Test> {
 tasks.withType<KotlinCompile> {
     kotlinOptions {
         freeCompilerArgs = listOf("-Xjsr305=strict")
-        jvmTarget = "11"
+        jvmTarget = "17"
     }
 }
 
