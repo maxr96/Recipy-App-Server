@@ -13,7 +13,6 @@ data class ExternalExtendedIngredient(
     val nameClean: String,
     val original: String,
     val originalName: String,
-    val originalString: String,
     val unit: String,
 )
 

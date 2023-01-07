@@ -28,12 +28,12 @@ fun ExternalRecipe.mapToInternalEntity(): Recipe {
     val recipe = Recipe(
         title = title,
         description = summary,
-        category = Category.APPETIZER, // TODO: Introduce proper category converter.
+        category = Category.APPETIZER, // TODO: Introduce proper category converter using dishTypes array.
         creditsText = creditsText,
-        cuisine = cuisines.first(), // TODO: Shall we consider storing more cuisines?
-        author = User(),
+        cuisine = cuisines.firstOrNull() ?: "", // TODO: Shall we consider storing more cuisines?
+        author = User(), // TODO: Need to pass an actual user
         imagePath = image,
-        instructions = extendedIngredients.map { it.originalString }.toString(),
+        instructions = extendedIngredients.map { it.originalName }.toString(),
         time = Duration.ofMinutes(readyInMinutes.toLong()),
         tags = dishTypes.map { dishType -> Tag(name = dishType) }.toMutableSet(), // TODO: May be not a proper tag
     )

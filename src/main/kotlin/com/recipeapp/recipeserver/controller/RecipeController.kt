@@ -2,6 +2,7 @@ package com.recipeapp.recipeserver.controller
 
 import com.recipeapp.recipeserver.dto.RecipeDTO
 import com.recipeapp.recipeserver.dto.external.ExternalRecipeDTO
+import com.recipeapp.recipeserver.dto.external.mapToInternalEntity
 import com.recipeapp.recipeserver.dto.mapToDto
 import com.recipeapp.recipeserver.dto.mapToEntity
 import com.recipeapp.recipeserver.service.RecipeService
@@ -71,7 +72,10 @@ class RecipeController(
     @PostMapping("/external")
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     fun createRecipeFromExternalAPI(@RequestBody recipe: ExternalRecipeDTO): ResponseEntity<RecipeDTO> {
-        println(recipe)
+        val internalRecipes = recipe.mapToInternalEntity()
+        for (internalRecipe in internalRecipes) {
+            recipeService.addRecipe(internalRecipe)
+        }
         return ResponseEntity.ok().build()
     }
 }
