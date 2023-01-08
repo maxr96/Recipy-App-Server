@@ -34,7 +34,7 @@ class RecipeServiceTests(@Autowired val recipeService: RecipeService, @Autowired
             time = Duration.ZERO, author = User(1, "me", "me@email.com"),
             tags = mutableSetOf(Tag(1, "healthy")),
         )
-        p.addRecipeIngredient(RecipeIngredient(1, Ingredient(1, "meat"), MeasurementUnit(1, "pieces"), 20, p))
+        p.addRecipeIngredient(RecipeIngredient(1, Ingredient(1, "meat"), MeasurementUnit(1, "pieces"), 20.0, p))
         assertThat(recipeService.getAllRecipes()).hasSize(0)
         recipeService.addRecipe(p)
         val recipes = recipeService.getAllRecipes()
@@ -57,20 +57,18 @@ class RecipeServiceTests(@Autowired val recipeService: RecipeService, @Autowired
             time = Duration.ZERO, author = User(1, "me", "me@email.com"),
             tags = mutableSetOf(Tag(1, "healthy")),
         )
-        p.addRecipeIngredient(RecipeIngredient(1, Ingredient(1, "meat"), MeasurementUnit(1, "pieces"), 20, p))
+        p.addRecipeIngredient(RecipeIngredient(1, Ingredient(1, "meat"), MeasurementUnit(1, "pieces"), 20.0, p))
         assertThat(recipeService.getAllRecipes()).hasSize(0)
         recipeService.addRecipe(p)
-        var recipes = recipeService.getAllRecipes()
-        assertThat(recipes).hasSize(1)
+        assertThat(recipeService.getAllRecipes()).hasSize(1)
 
         val p2 = Recipe(
             1, "desc", "title", Category.MAIN_DISH, "wesd", "instr",
             time = Duration.ZERO, author = User(1, "me", "me@email.com"),
             tags = mutableSetOf(Tag(1, "healthy")),
         )
-        p2.addRecipeIngredient(RecipeIngredient(1, Ingredient(1, "meat"), MeasurementUnit(1, "pieces"), 20, p2))
+        p2.addRecipeIngredient(RecipeIngredient(1, Ingredient(1, "meat"), MeasurementUnit(1, "pieces"), 20.0, p2))
         recipeService.addRecipe(p2)
-        recipes = recipeService.getAllRecipes()
-        assertThat(recipes).hasSize(2)
+        assertThat(recipeService.getAllRecipes()).hasSize(2)
     }
 }
