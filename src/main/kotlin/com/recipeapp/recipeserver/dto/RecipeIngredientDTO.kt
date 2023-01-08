@@ -5,7 +5,7 @@ import com.recipeapp.recipeserver.model.MeasurementUnit
 import com.recipeapp.recipeserver.model.Recipe
 import com.recipeapp.recipeserver.model.RecipeIngredient
 
-data class RecipeIngredientDTO(val name: String, val unit: String, val amount: Short)
+data class RecipeIngredientDTO(val name: String, val unit: String, val amount: Double)
 
 fun RecipeIngredient.mapToDto(): RecipeIngredientDTO {
     return RecipeIngredientDTO(

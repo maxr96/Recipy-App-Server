@@ -35,7 +35,8 @@ class Recipe(
     @Column(length = 50, nullable = false)
     var title: String,
 
-    @Column(length = 200)
+    @Column
+    @Lob
     var description: String,
 
     @Enumerated(EnumType.ORDINAL)

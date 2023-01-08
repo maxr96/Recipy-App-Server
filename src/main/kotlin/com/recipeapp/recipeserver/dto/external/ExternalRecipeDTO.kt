@@ -6,4 +6,4 @@ data class ExternalRecipeDTO(
     val recipes: List<ExternalRecipe>,
 )
 
-fun ExternalRecipeDTO.mapToInternalEntity(): List<Recipe> = recipes.map { it.mapToInternalEntity() }
+fun ExternalRecipeDTO.mapToInternalEntity(username: String): List<Recipe> = recipes.map { it.mapToInternalEntity(username) }

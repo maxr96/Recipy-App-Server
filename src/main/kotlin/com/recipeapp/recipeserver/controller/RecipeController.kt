@@ -71,8 +71,8 @@ class RecipeController(
 
     @PostMapping("/external")
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    fun createRecipeFromExternalAPI(@RequestBody recipe: ExternalRecipeDTO): ResponseEntity<RecipeDTO> {
-        val internalRecipes = recipe.mapToInternalEntity()
+    fun createRecipeFromExternalAPI(@RequestBody recipe: ExternalRecipeDTO, principal: Principal): ResponseEntity<RecipeDTO> {
+        val internalRecipes = recipe.mapToInternalEntity(principal.name)
         for (internalRecipe in internalRecipes) {
             recipeService.addRecipe(internalRecipe)
         }

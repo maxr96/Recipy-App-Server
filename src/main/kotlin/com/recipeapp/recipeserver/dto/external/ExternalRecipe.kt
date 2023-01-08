@@ -24,14 +24,14 @@ data class ExternalRecipe(
     val title: String,
 )
 
-fun ExternalRecipe.mapToInternalEntity(): Recipe {
+fun ExternalRecipe.mapToInternalEntity(username: String): Recipe {
     val recipe = Recipe(
         title = title,
         description = summary,
         category = Category.APPETIZER, // TODO: Introduce proper category converter using dishTypes array.
         creditsText = creditsText,
         cuisine = cuisines.firstOrNull() ?: "", // TODO: Shall we consider storing more cuisines?
-        author = User(), // TODO: Need to pass an actual user
+        author = User(username = username),
         imagePath = image,
         instructions = extendedIngredients.map { it.originalName }.toString(),
         time = Duration.ofMinutes(readyInMinutes.toLong()),

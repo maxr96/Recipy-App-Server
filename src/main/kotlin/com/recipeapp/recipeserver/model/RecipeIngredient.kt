@@ -27,7 +27,7 @@ class RecipeIngredient(
     var unit: MeasurementUnit,
 
     @Column
-    var amount: Short,
+    var amount: Double,
 
     @ManyToOne(cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
     @JoinColumn(name = "recipe_id")

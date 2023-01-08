@@ -18,7 +18,7 @@ data class ExternalExtendedIngredient(
 
 fun ExternalExtendedIngredient.mapToInternalEntity(recipe: Recipe): RecipeIngredient {
     return RecipeIngredient(
-        amount = amount.toInt().toShort(),
+        amount = amount,
         ingredient = Ingredient(name = name),
         unit = MeasurementUnit(name = unit),
         recipe = recipe,
