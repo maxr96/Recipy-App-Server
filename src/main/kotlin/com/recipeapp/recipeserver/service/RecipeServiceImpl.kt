@@ -1,12 +1,12 @@
 package com.recipeapp.recipeserver.service
 
 import com.recipeapp.recipeserver.model.Recipe
-import com.recipeapp.recipeserver.repository.*
+import com.recipeapp.recipeserver.repository.RecipeRepository
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.server.ResponseStatusException
-import java.util.*
+import java.util.Optional
 
 @Component
 class RecipeServiceImpl(
@@ -32,32 +32,32 @@ class RecipeServiceImpl(
         if (existingUser != null) {
             recipe.author = existingUser
         } else {
+            // TODO: throw an application level exception and handle it on the controller.
             throw ResponseStatusException(HttpStatus.BAD_REQUEST, "Author Not Found")
         }
-        val existingUnits = unitService.getAllByNames(recipe.recipeIngredients.map { it.unit.name })
-        val existingIngredients = ingredientService.getAllByNames(recipe.recipeIngredients.map { it.ingredient.name })
-        val existingTags = tagsService.getAllByNames(recipe.tags.map { it.name })
+        val existingUnits = unitService.getAllByNames(recipe.recipeIngredients.map { it.unit.name }).toMutableList()
+        val existingIngredients = ingredientService.getAllByNames(recipe.recipeIngredients.map { it.ingredient.name }).toMutableList()
+        val existingTags = tagsService.getAllByNames(recipe.tags.map { it.name }).toMutableList()
 
-        if (existingUnits.isNotEmpty() || existingIngredients.isNotEmpty()) {
-            for ((index, value) in recipe.recipeIngredients.withIndex()) {
-                val foundUnit = existingUnits.firstOrNull { it?.name == value.unit.name }
-                if (foundUnit != null) {
-                    recipe.recipeIngredients.elementAt(index).unit = foundUnit
-                }
-                val foundIngredient = existingIngredients.firstOrNull { it?.name == value.ingredient.name }
-                if (foundIngredient != null) {
-                    recipe.recipeIngredients.elementAt(index).ingredient = foundIngredient
-                }
+        for ((index, value) in recipe.recipeIngredients.withIndex()) {
+            val foundUnit = existingUnits.firstOrNull { it?.name == value.unit.name }
+            if (foundUnit != null) {
+                recipe.recipeIngredients.elementAt(index).unit = foundUnit
             }
+            existingUnits.add(value.unit)
+            val foundIngredient = existingIngredients.firstOrNull { it?.name == value.ingredient.name }
+            if (foundIngredient != null) {
+                recipe.recipeIngredients.elementAt(index).ingredient = foundIngredient
+            }
+            existingIngredients.add(value.ingredient)
         }
 
-        if (existingTags.isNotEmpty()) {
-            for ((index, v) in recipe.tags.withIndex()) {
-                val foundTag = existingTags.firstOrNull { it?.name == v.name }
-                if (foundTag != null) {
-                    recipe.tags.elementAt(index).id = foundTag.id
-                }
+        for ((index, v) in recipe.tags.withIndex()) {
+            val foundTag = existingTags.firstOrNull { it?.name == v.name }
+            if (foundTag != null) {
+                recipe.tags.elementAt(index).id = foundTag.id
             }
+            existingTags.add(v)
         }
         return recipeRepository.save(recipe)
     }

@@ -29,6 +29,7 @@ class AppSecurityConfig(@Qualifier("userDetailsServiceImpl") val userDetailsServ
             .antMatchers(HttpMethod.GET, "/recipes**").permitAll()
             .antMatchers(HttpMethod.GET, "/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**", "/swagger-resources", "/swagger-resources/*").permitAll()
             .antMatchers(HttpMethod.GET, "/admin").hasAuthority("ADMIN")
+            .antMatchers("/h2-console/**").permitAll()
             .anyRequest().authenticated()
             .and()
             .addFilter(JWTAuthenticationFilter(authenticationManager()))
